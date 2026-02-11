@@ -1,0 +1,525 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ademy | Gestion academica sin friccion</title>
+    <meta
+      name="description"
+      content="Ademy es la plataforma academica que centraliza matriculas, pagos, clases, docentes y reportes en un solo lugar."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scroll-progress" aria-hidden="true">
+      <span class="scroll-progress__bar" id="scroll-progress"></span>
+    </div>
+    <div class="page">
+      <header class="nav">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="assets/ademy-logo.png" alt="" />
+          </div>
+          <div class="brand-text">Ademy</div>
+        </div>
+        <nav class="nav-links">
+          <a href="#beneficios">Beneficios</a>
+          <a href="#modulos">Modulos</a>
+          <a href="#demo">Demo</a>
+          <a href="#capturas">Capturas</a>
+          <a href="#proceso">Proceso</a>
+          <a href="#tutoriales">Videos</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <a class="btn btn-primary" href="#contacto">Solicitar demo</a>
+      </header>
+
+      <section class="hero" id="inicio">
+        <div class="hero-text" data-reveal>
+          <div class="eyebrow">Plataforma academica todo en uno</div>
+          <h1>
+            Gestiona admisiones, matriculas y pagos con
+            <span class="accent">claridad, control y evidencia</span>.
+          </h1>
+          <p>
+            Ademy integra Operativo, Academico, Financiero y Seguridad para que cada equipo opere con
+            datos consistentes y procesos auditables.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contacto">Quiero una demo</a>
+            <a class="btn btn-ghost" href="#proceso">Ver como funciona</a>
+          </div>
+          <div class="hero-metrics">
+            <div>
+              <span class="metric" data-count="4" data-suffix=" mod">4 mod</span>
+              <span class="metric-label">Operativo, Academico, Financiero, Seguridad</span>
+            </div>
+            <div>
+              <span class="metric" data-count="6" data-suffix=" procesos">6 procesos</span>
+              <span class="metric-label">Procesos clave integrados</span>
+            </div>
+            <div>
+              <span class="metric" data-count="0">0</span>
+              <span class="metric-label">Duplicidad por validaciones</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual" data-reveal>
+          <div class="screen">
+            <div class="screen-header">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <div class="screen-body">
+              <img
+                class="screen-shot"
+                src="assets/screens/seguridad_dashboard.png"
+                alt="Dashboard de seguridad en Ademy"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="floating-card">
+            <span class="pill">Alertas en tiempo real</span>
+            <p>Sesiones activas, usuarios bloqueados y reseteos pendientes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="beneficios">
+        <div class="section-header" data-reveal>
+          <h2>Beneficios que se sienten desde el primer dia</h2>
+          <p>Reduce tareas manuales y gana trazabilidad en cada flujo academico.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card" data-reveal>
+            <h3>Operacion centralizada</h3>
+            <p>Interesados, centros, niveles, matriculas y pagos en un solo entorno.</p>
+          </article>
+          <article class="card" data-reveal>
+            <h3>Pagos con control total</h3>
+            <p>Estados de pago, saldos pendientes y comprobantes listos para el estudiante.</p>
+          </article>
+          <article class="card" data-reveal>
+            <h3>Seguridad por roles</h3>
+            <p>Usuarios, permisos y monitoreo para asegurar acceso solo a lo necesario.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="modulos">
+        <div class="section-header" data-reveal>
+          <h2>Modulos principales del sistema</h2>
+          <p>Funcionalidades reales del producto en operacion.</p>
+        </div>
+        <div class="grid-4">
+          <div class="chip" data-reveal>Interesados y bitacora</div>
+          <div class="chip" data-reveal>Centros y empresas</div>
+          <div class="chip" data-reveal>Niveles y catalogos</div>
+          <div class="chip" data-reveal>Estudiantes y historial</div>
+          <div class="chip" data-reveal>Matriculas y promociones</div>
+          <div class="chip" data-reveal>Pagos y comprobantes</div>
+          <div class="chip" data-reveal>Bonificaciones</div>
+          <div class="chip" data-reveal>Usuarios y roles</div>
+        </div>
+      </section>
+
+      <section class="section demo" id="demo">
+        <div class="section-header" data-reveal>
+          <h2>Demo interactivo del flujo academico</h2>
+          <p>Explora como se conectan los pasos clave de Ademy en una operacion real.</p>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-steps" data-reveal>
+            <button class="demo-step is-active" type="button" data-demo-step="admisiones">
+              Admisiones
+            </button>
+            <button class="demo-step" type="button" data-demo-step="matriculas">
+              Matriculas
+            </button>
+            <button class="demo-step" type="button" data-demo-step="pagos">
+              Pagos
+            </button>
+            <button class="demo-step" type="button" data-demo-step="reportes">
+              Reportes
+            </button>
+          </div>
+          <div class="demo-panel" data-reveal>
+            <div class="demo-content is-active" data-demo-content="admisiones">
+              <h3>Interesados y bitacora unificados</h3>
+              <p>Registra visitas, origenes y seguimiento para convertir interesados en estudiantes.</p>
+              <div class="demo-metrics">
+                <div>
+                  <span class="metric" data-count="1" data-suffix=" bitacora">1 bitacora</span>
+                  <span class="metric-label">seguimiento diario</span>
+                </div>
+                <div>
+                  <span class="metric" data-count="1" data-suffix=" registro">1 registro</span>
+                  <span class="metric-label">por contacto</span>
+                </div>
+              </div>
+            </div>
+            <div class="demo-content" data-demo-content="matriculas">
+              <h3>Matriculas con reglas claras</h3>
+              <p>Cupos, promociones y estado academico siempre actualizados.</p>
+              <div class="demo-metrics">
+                <div>
+                  <span class="metric" data-count="6" data-suffix=" estados">6 estados</span>
+                  <span class="metric-label">seguimiento de matricula</span>
+                </div>
+                <div>
+                  <span class="metric" data-count="0">0</span>
+                  <span class="metric-label">datos duplicados</span>
+                </div>
+              </div>
+            </div>
+            <div class="demo-content" data-demo-content="pagos">
+              <h3>Pagos y comprobantes listos</h3>
+              <p>Registra pagos, valida saldos y genera comprobantes al instante.</p>
+              <div class="demo-metrics">
+                <div>
+                  <span class="metric" data-count="2" data-suffix=" vistas">2 vistas</span>
+                  <span class="metric-label">cobros pendientes e historico</span>
+                </div>
+                <div>
+                  <span class="metric" data-count="1" data-suffix=" comprobante">1 comprobante</span>
+                  <span class="metric-label">por cada pago</span>
+                </div>
+              </div>
+            </div>
+            <div class="demo-content" data-demo-content="reportes">
+              <h3>Reportes que accionan decisiones</h3>
+              <p>Indicadores de seguridad, sesiones y permisos para auditoria interna.</p>
+              <div class="demo-metrics">
+                <div>
+                  <span class="metric" data-count="5" data-suffix=" paneles">5 paneles</span>
+                  <span class="metric-label">indicadores clave</span>
+                </div>
+                <div>
+                  <span class="metric" data-count="100" data-suffix="%">100%</span>
+                  <span class="metric-label">trazabilidad academica</span>
+                </div>
+              </div>
+            </div>
+            <div class="demo-preview" aria-hidden="true">
+              <div class="demo-preview__panel"></div>
+              <div class="demo-preview__panel"></div>
+              <div class="demo-preview__panel wide"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="capturas">
+        <div class="section-header" data-reveal>
+          <h2>Capturas reales del sistema</h2>
+          <p>Vistas reales de Ademy en operacion diaria.</p>
+        </div>
+        <div class="gallery" data-reveal>
+          <div class="gallery-track">
+            <article class="gallery-card">
+              <img src="assets/screens/login.png" alt="Pantalla de inicio de sesion" loading="lazy" />
+              <div class="gallery-caption">Ingreso al sistema</div>
+            </article>
+            <article class="gallery-card">
+              <img src="assets/screens/seguridad_dashboard.png" alt="Dashboard de seguridad" loading="lazy" />
+              <div class="gallery-caption">Dashboard de seguridad</div>
+            </article>
+            <article class="gallery-card">
+              <img src="assets/screens/matriculas_listado.png" alt="Listado de matriculas" loading="lazy" />
+              <div class="gallery-caption">Listado de matriculas</div>
+            </article>
+            <article class="gallery-card">
+              <img src="assets/screens/pagos_listado.png" alt="Listado de pagos" loading="lazy" />
+              <div class="gallery-caption">Control de pagos</div>
+            </article>
+            <article class="gallery-card">
+              <img src="assets/screens/pagos_modal_registrar.png" alt="Registro de pagos" loading="lazy" />
+              <div class="gallery-caption">Registro de pago</div>
+            </article>
+            <article class="gallery-card">
+              <img src="assets/screens/ticket_pago.png" alt="Ticket de pago" loading="lazy" />
+              <div class="gallery-caption">Ticket de pago</div>
+            </article>
+            <article class="gallery-card">
+              <img src="assets/screens/niveles.png" alt="Niveles academicos" loading="lazy" />
+              <div class="gallery-caption">Niveles academicos</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="proceso">
+        <div class="section-header" data-reveal>
+          <h2>Implementacion clara y acompanamiento real</h2>
+          <p>Te guiamos desde el primer dia para que el equipo adopte el sistema sin friccion.</p>
+        </div>
+        <div class="steps">
+          <div class="step" data-reveal>
+            <span class="step-number">1</span>
+            <div>
+              <h3>Levantamiento y roles</h3>
+              <p>Mapeamos procesos, roles y permisos que usara cada area.</p>
+            </div>
+          </div>
+          <div class="step" data-reveal>
+            <span class="step-number">2</span>
+            <div>
+              <h3>Configuracion y catalogos</h3>
+              <p>Parametrizamos centros, niveles, promociones y reglas de negocio.</p>
+            </div>
+          </div>
+          <div class="step" data-reveal>
+            <span class="step-number">3</span>
+            <div>
+              <h3>Capacitacion y puesta en marcha</h3>
+              <p>Capacitacion por rol, piloto y acompanamiento del primer ciclo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section highlight" id="tutoriales">
+        <div class="section-header" data-reveal>
+          <h2>Videos y capacitacion a tu medida</h2>
+          <p>Tres formatos para marketing, onboarding y seguimiento interno.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card video-card" data-reveal>
+            <div class="video-embed" aria-label="Video demo publico">
+              <a
+                class="video-thumb"
+                href="https://www.youtube.com/watch?v=AxjIpqDcZGc"
+                target="_blank"
+                rel="noreferrer"
+                data-video-id="AxjIpqDcZGc"
+                data-video-title="Demo Ademy"
+                style="background-image: url('https://img.youtube.com/vi/AxjIpqDcZGc/hqdefault.jpg');"
+              >
+                <span class="play">Ver en YouTube</span>
+              </a>
+            </div>
+            <h3>Demo publica en la landing</h3>
+            <p>
+              Ideal para conversion: un video corto de 60-90s con beneficios clave. Hospedalo en YouTube
+              (no listado) o Vimeo y embebe aqui.
+            </p>
+          </article>
+          <article class="card video-card" data-reveal>
+            <div class="video-embed" aria-label="Video onboarding interno">
+              <a
+                class="video-thumb"
+                href="https://www.youtube.com/watch?v=-5YfRX9Qh5M"
+                target="_blank"
+                rel="noreferrer"
+                data-video-id="-5YfRX9Qh5M"
+                data-video-title="Onboarding por roles"
+                style="background-image: url('https://img.youtube.com/vi/-5YfRX9Qh5M/hqdefault.jpg');"
+              >
+                <span class="play">Ver en YouTube</span>
+              </a>
+            </div>
+            <h3>Biblioteca dentro del sistema</h3>
+            <p>
+              Micro-videos por rol con acceso desde Ademy. Reduce tickets y acelera la adopcion desde el
+              primer dia.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Administracion</span>
+              <span class="tag">Docentes</span>
+              <span class="tag">Coordinacion</span>
+            </div>
+          </article>
+          <article class="card video-card" data-reveal>
+            <div class="video-embed" aria-label="Video campus Moodle">
+              <a
+                class="video-thumb"
+                href="https://www.youtube.com/watch?v=-5YfRX9Qh5M"
+                target="_blank"
+                rel="noreferrer"
+                data-video-id="-5YfRX9Qh5M"
+                data-video-title="Curso en Moodle"
+                style="background-image: url('https://img.youtube.com/vi/-5YfRX9Qh5M/hqdefault.jpg');"
+              >
+                <span class="play">Ver en YouTube</span>
+              </a>
+            </div>
+            <h3>Campus en Moodle</h3>
+            <p>
+              Si necesitas seguimiento, evaluaciones o certificados, monta un curso en Moodle y enlazalo
+              desde Ademy.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Progreso</span>
+              <span class="tag">Evaluaciones</span>
+              <span class="tag">Certificados</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="testimonios">
+        <div class="section-header" data-reveal>
+          <h2>Equipos que ya trabajan con Ademy</h2>
+          <p>Resultados reales en control academico y experiencia del estudiante.</p>
+        </div>
+        <div class="grid-2">
+          <blockquote class="quote" data-reveal>
+            “La matricula que tomaba horas hoy se cierra en minutos. Nuestro equipo respira.”
+            <span>Direccion academica</span>
+          </blockquote>
+          <blockquote class="quote" data-reveal>
+            “Por fin tenemos indicadores claros para cada sede y cada programa.”
+            <span>Coordinacion regional</span>
+          </blockquote>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="section-header" data-reveal>
+          <h2>Preguntas frecuentes</h2>
+          <p>Respuestas claras para avanzar rapido con tu equipo.</p>
+        </div>
+        <div class="faq">
+          <div class="faq-item" data-reveal>
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Cuanto tiempo toma implementar Ademy?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Entre 2 y 4 semanas, segun sedes, volumen de datos y reglas de negocio.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Se puede migrar informacion historica?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Si. Importamos estudiantes, matriculas, pagos y catalogos con plantillas asistidas.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Incluye soporte y capacitacion?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Incluimos sesiones por rol, videos on demand y soporte prioritario en el arranque.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Puedo personalizar reportes y procesos?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Claro. Ajustamos flujos, etiquetas y permisos segun tus indicadores clave.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact" id="contacto">
+        <div class="section-header" data-reveal>
+          <h2>Agenda una demo personalizada</h2>
+          <p>Cuanto mas contexto nos des, mas rapido mostramos valor en tu operacion.</p>
+        </div>
+        <form
+          class="contact-form"
+          id="contact-form"
+          data-endpoint="https://formspree.io/f/YOUR_FORM_ID"
+          data-reveal
+        >
+          <div class="form-grid">
+            <label class="form-field">
+              Nombre y apellido
+              <input type="text" name="nombre" placeholder="Tu nombre" required />
+            </label>
+            <label class="form-field">
+              Correo corporativo
+              <input type="email" name="email" placeholder="correo@institucion.edu" required />
+            </label>
+            <label class="form-field">
+              Institucion
+              <input type="text" name="institucion" placeholder="Nombre de tu centro" required />
+            </label>
+            <label class="form-field">
+              Numero de sedes
+              <input type="number" name="sedes" placeholder="Ej. 3" min="1" />
+            </label>
+          </div>
+          <label class="form-field">
+            Que te gustaria resolver con Ademy?
+            <textarea name="mensaje" rows="4" placeholder="Cuentanos tu contexto"></textarea>
+          </label>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+            <button class="btn btn-ghost" type="reset">Limpiar</button>
+          </div>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="cta" id="agenda" data-reveal>
+        <div>
+          <h2>Listo para ver Ademy en accion?</h2>
+          <p>Agenda una demo personalizada y conoce como optimizar tu operacion academica.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="mailto:ventas@ademy.com">Agendar demo</a>
+          <a class="btn btn-ghost" href="mailto:contacto@ademy.com">Hablar con el equipo</a>
+        </div>
+        <small class="cta-note">Actualiza estos correos con tus datos reales.</small>
+      </section>
+
+      <footer class="footer">
+        <div>
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </div>
+            <div class="brand-text">Ademy</div>
+          </div>
+          <p>Gestion academica moderna para instituciones que quieren crecer.</p>
+        </div>
+        <div class="footer-links">
+          <span>contacto@ademy.com</span>
+          <span>+00 000 000 000</span>
+          <span>Instagram | LinkedIn</span>
+        </div>
+      </footer>
+    </div>
+
+    <button class="scroll-top" type="button" aria-label="Volver arriba">
+      ↑
+    </button>
+
+    <div class="video-modal" id="video-modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="video-modal__backdrop" data-video-close></div>
+      <div class="video-modal__content" role="document">
+        <button class="video-modal__close" type="button" data-video-close aria-label="Cerrar">
+          ✕
+        </button>
+        <div class="video-modal__preview" id="video-modal-preview"></div>
+        <div class="video-modal__actions">
+          <a class="btn btn-primary" id="video-modal-link" href="#" target="_blank" rel="noreferrer">
+            Ver en YouTube
+          </a>
+          <button class="btn btn-ghost" type="button" data-video-close>Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
