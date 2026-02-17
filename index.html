@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="wave-bg" aria-hidden="true">
+      <span class="wave-layer wave-layer--single"></span>
+    </div>
     <div class="scroll-progress" aria-hidden="true">
       <span class="scroll-progress__bar" id="scroll-progress"></span>
     </div>
@@ -28,7 +31,7 @@
           </div>
           <div class="brand-text">Ademy</div>
         </div>
-        <nav class="nav-links">
+        <nav class="nav-links" id="nav-menu">
           <a href="#beneficios">Beneficios</a>
           <a href="#modulos">Modulos</a>
           <a href="#demo">Demo</a>
@@ -37,8 +40,14 @@
           <a href="#tutoriales">Videos</a>
           <a href="#faq">FAQ</a>
           <a href="#contacto">Contacto</a>
+          <a class="nav-cta-link" href="#contacto">Solicitar demo</a>
         </nav>
-        <a class="btn btn-primary" href="#contacto">Solicitar demo</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a class="btn btn-primary nav-cta" href="#contacto">Solicitar demo</a>
       </header>
 
       <section class="hero" id="inicio">
@@ -53,8 +62,8 @@
             datos consistentes y procesos auditables.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contacto">Quiero una demo</a>
-            <a class="btn btn-ghost" href="#proceso">Ver como funciona</a>
+            <a class="btn btn-primary" href="#contacto">Agenda demo de 15 min</a>
+            <a class="btn btn-ghost" href="#tutoriales">Ver recorrido de 2 min</a>
           </div>
           <div class="hero-metrics">
             <div>
@@ -94,6 +103,33 @@
         </div>
       </section>
 
+      <section class="section" id="impacto">
+        <div class="section-header" data-reveal>
+          <h2>Prueba social y resultados esperados</h2>
+          <p>Personaliza estos datos con tus cifras reales para fortalecer la conversion.</p>
+        </div>
+        <div class="logo-strip" data-reveal>
+          <div class="logo-pill">Logo institucion</div>
+          <div class="logo-pill">Logo academia</div>
+          <div class="logo-pill">Logo instituto</div>
+          <div class="logo-pill">Logo partner</div>
+        </div>
+        <div class="grid-3 impact-grid">
+          <article class="card" data-reveal>
+            <h3>Tiempo de matricula</h3>
+            <p>Reduce tiempos y errores en el proceso de inscripcion.</p>
+          </article>
+          <article class="card" data-reveal>
+            <h3>Visibilidad de pagos</h3>
+            <p>Estado financiero claro para equipos administrativos y cajeros.</p>
+          </article>
+          <article class="card" data-reveal>
+            <h3>Trazabilidad</h3>
+            <p>Seguimiento por estudiante con historico unificado.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="section" id="beneficios">
         <div class="section-header" data-reveal>
           <h2>Beneficios que se sienten desde el primer dia</h2>
@@ -129,6 +165,78 @@
           <div class="chip" data-reveal>Pagos y comprobantes</div>
           <div class="chip" data-reveal>Bonificaciones</div>
           <div class="chip" data-reveal>Usuarios y roles</div>
+        </div>
+      </section>
+
+      <section class="section" id="comparativa">
+        <div class="section-header" data-reveal>
+          <h2>Antes vs. despues</h2>
+          <p>Una comparacion clara de procesos manuales frente a un flujo digital.</p>
+        </div>
+        <div class="compare-grid">
+          <div class="compare-card" data-reveal>
+            <span class="compare-label">Antes</span>
+            <ul class="compare-list">
+              <li>Datos duplicados en hojas y sistemas</li>
+              <li>Seguimiento manual de interesados</li>
+              <li>Pagos sin conciliacion rapida</li>
+              <li>Reportes tardios y sin trazabilidad</li>
+            </ul>
+          </div>
+          <div class="compare-card is-accent" data-reveal>
+            <span class="compare-label">Despues</span>
+            <ul class="compare-list">
+              <li>Un solo registro por estudiante</li>
+              <li>Bitacora y seguimiento centralizado</li>
+              <li>Pagos con estado y comprobantes</li>
+              <li>Indicadores listos para decisiones</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="caso">
+        <div class="section-header" data-reveal>
+          <h2>Caso rapido (ejemplo)</h2>
+          <p>Un resumen corto para mostrar impacto real en una institucion.</p>
+        </div>
+        <article class="case-card" data-reveal>
+          <div>
+            <h3>Instituto demo</h3>
+            <p>Antes: matriculas dispersas y pagos sin seguimiento.</p>
+            <p>Despues: matriculas centralizadas y reportes diarios.</p>
+          </div>
+          <div class="case-metrics">
+            <div>
+              <span class="metric">-35%</span>
+              <span class="metric-label">tiempo de matricula</span>
+            </div>
+            <div>
+              <span class="metric">+28%</span>
+              <span class="metric-label">cobranza en el mes</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="seguridad">
+        <div class="section-header" data-reveal>
+          <h2>Seguridad y control</h2>
+          <p>Roles, permisos y auditoria para operaciones sensibles.</p>
+        </div>
+        <div class="grid-3 security-grid">
+          <article class="card" data-reveal>
+            <h3>Roles y permisos</h3>
+            <p>Acceso por perfil para limitar acciones criticas.</p>
+          </article>
+          <article class="card" data-reveal>
+            <h3>Monitoreo de sesiones</h3>
+            <p>Actividad y sesiones activas visibles en el dashboard.</p>
+          </article>
+          <article class="card" data-reveal>
+            <h3>Auditoria interna</h3>
+            <p>Seguimiento de cambios y operaciones sensibles.</p>
+          </article>
         </div>
       </section>
 
@@ -423,6 +531,24 @@
             </button>
             <div class="faq-answer">
               <p>Claro. Ajustamos flujos, etiquetas y permisos segun tus indicadores clave.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Que opciones de hosting existen?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Se puede instalar en tu servidor o en una nube gestionada segun requerimientos.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span>Como se protege la informacion?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Control por roles, monitoreo y respaldo planificado para datos sensibles.</p>
             </div>
           </div>
         </div>

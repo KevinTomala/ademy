@@ -17,6 +17,8 @@ revealItems.forEach((item) => revealObserver.observe(item));
 const nav = document.querySelector(".nav");
 const progressBar = document.getElementById("scroll-progress");
 const scrollTopButton = document.querySelector(".scroll-top");
+const navToggle = document.querySelector(".nav-toggle");
+const navMenu = document.getElementById("nav-menu");
 
 const updateScrollUI = () => {
   const scrollY = window.scrollY || window.pageYOffset;
@@ -48,6 +50,28 @@ if (scrollTopButton) {
       window.location.pathname + window.location.search
     );
     window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+if (navToggle && navMenu && nav) {
+  const closeNav = () => {
+    nav.classList.remove("is-open");
+    navToggle.setAttribute("aria-expanded", "false");
+  };
+
+  navToggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("is-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeNav());
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!nav.contains(event.target)) {
+      closeNav();
+    }
   });
 }
 
