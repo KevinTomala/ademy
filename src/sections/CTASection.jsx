@@ -2,8 +2,8 @@ export default function CTASection() {
   return (
     <section className="cta" id="agenda" data-reveal>
       <div>
-        <h2>Listo para ver Ademy en accion?</h2>
-        <p>Agenda una demo personalizada y conoce como optimizar tu operacion academica.</p>
+        <h2>¿Listo para ver Ademy en acción?</h2>
+        <p>Agenda una demo personalizada y conoce cómo optimizar tu operación académica.</p>
       </div>
       <div className="cta-actions">
         <a className="btn btn-primary" href="#contacto">

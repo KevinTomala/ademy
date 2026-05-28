@@ -11,11 +11,11 @@ export default function Beneficios() {
           <p>Ya no busques en tres sistemas distintos para saber si un estudiante pagó, qué curso tiene o si sus documentos están completos.</p>
         </article>
         <article className="card" data-reveal>
-          <h3>Cobros sin cabos sueltos</h3>
+          <h3>Cobros organizados, sin esfuerzo</h3>
           <p>El cajero registra el pago, el comprobante sale solo y la factura al SRI se emite automáticamente — sin pasos manuales.</p>
         </article>
         <article className="card" data-reveal>
-          <h3>Cada persona ve lo suyo</h3>
+          <h3>Permisos claros para cada miembro</h3>
           <p>La secretaria no ve datos financieros. El recepcionista no toca configuraciones. Cada rol accede solo a lo que necesita para trabajar.</p>
         </article>
       </div>

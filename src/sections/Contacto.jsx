@@ -66,7 +66,7 @@ const CONTACT_ITEMS = [
     ),
   },
   {
-    label: 'Ubicacion',
+    label: 'Ubicación',
     value: 'Piedrahita 824 entre Av. Quito y Av. Machala, Guayaquil, Ecuador',
     sub: 'Lunes a Viernes: 08:00 - 16:00',
     href: null,
@@ -253,7 +253,7 @@ export default function Contacto() {
         <div className="contact-info" data-reveal>
           <span className="chip">Contacto</span>
           <h2 className="contact-info__heading">
-            Tienes preguntas?<br />Estamos para ayudarte
+            ¿Tienes preguntas?<br />Estamos para ayudarte
           </h2>
           <p className="contact-info__body">
             Ya sea que tengas dudas sobre la plataforma, necesites soporte o quieras conocer más sobre nuestros servicios, no dudes en contactarnos.
@@ -330,7 +330,7 @@ export default function Contacto() {
                 onBlur={() => handleBlur('rol')}
                 className={errors.rol && touched.rol ? 'is-invalid' : ''}
               >
-                <option value="">Selecciona una opcion</option>
+                <option value="">Selecciona una opción</option>
                 {ROL_OPTIONS.map((o) => (
                   <option key={o} value={o}>{o}</option>
                 ))}
@@ -341,7 +341,7 @@ export default function Contacto() {
             {isDemo && (
               <>
                 <label className="form-field">
-                  Institucion
+                  Institución
                   <input
                     type="text"
                     name="institucion"
@@ -366,11 +366,11 @@ export default function Contacto() {
             )}
 
             <label className="form-field">
-              {isDemo ? 'Que te gustaria resolver con Ademy?' : 'Mensaje'}
+              {isDemo ? '¿Qué te gustaría resolver con Ademy?' : 'Mensaje'}
               <textarea
                 name="mensaje"
                 rows="3"
-                placeholder={isDemo ? 'Cuentanos tu contexto...' : 'En que podemos ayudarte?'}
+                placeholder={isDemo ? 'Cuéntanos tu contexto...' : '¿En qué podemos ayudarte?'}
                 value={fields.mensaje}
                 onChange={(e) => setField('mensaje', e.target.value)}
               />
@@ -378,7 +378,7 @@ export default function Contacto() {
 
             {captchaEnabled && (
               <div className="captcha-wrap">
-                <p className="captcha-label">Verificacion de seguridad</p>
+                <p className="captcha-label">Verificación de seguridad</p>
                 <div ref={captchaContainerRef} className="captcha-widget" />
                 {!recaptchaReady && !recaptchaError && (
                   <p className="captcha-hint">Cargando reCAPTCHA...</p>

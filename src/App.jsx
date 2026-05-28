@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import ScrollProgress from './components/ScrollProgress'
 import ScrollToTop from './components/ScrollToTop'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
-import Impacto from './sections/Impacto'
 import Beneficios from './sections/Beneficios'
 import Modulos from './sections/Modulos'
 import Integraciones from './sections/Integraciones'
@@ -18,10 +18,9 @@ import Tutoriales from './sections/Tutoriales'
 import FAQ from './sections/FAQ'
 import Contacto from './sections/Contacto'
 import Footer from './sections/Footer'
+import BibliotecaPage from './pages/BibliotecaPage'
 
-export default function App() {
-  const progressBarRef = useRef(null)
-
+function LandingPage({ progressBarRef }) {
   useEffect(() => {
     const bar = progressBarRef.current
     const update = () => {
@@ -31,8 +30,7 @@ export default function App() {
     }
     window.addEventListener('scroll', update, { passive: true })
     return () => window.removeEventListener('scroll', update)
-  }, [])
-
+  }, [progressBarRef])
 
   useEffect(() => {
     const els = document.querySelectorAll('[data-reveal], [data-reveal="left"], [data-reveal="right"]')
@@ -50,7 +48,6 @@ export default function App() {
     const targets = document.querySelectorAll('.card, .chip, .step, .quote, .demo-panel, .screen')
     const maxTilt = 6
     const cleanup = []
-
     targets.forEach((target) => {
       let rect = null
       const onMove = (e) => {
@@ -70,9 +67,31 @@ export default function App() {
         target.removeEventListener('mouseleave', onLeave)
       })
     })
-
     return () => cleanup.forEach((fn) => fn())
   }, [])
+
+  return (
+    <main className="page">
+      <Hero />
+      <Beneficios />
+      <Comparativa />
+      <Proceso />
+      <Modulos />
+      <Integraciones />
+      <Roles />
+      <Gallery />
+      <Caso />
+      <Seguridad />
+      <Demo />
+      <Tutoriales />
+      <FAQ />
+      <Contacto />
+    </main>
+  )
+}
+
+export default function App() {
+  const progressBarRef = useRef(null)
 
   return (
     <>
@@ -81,23 +100,10 @@ export default function App() {
       </div>
       <ScrollProgress ref={progressBarRef} />
       <Nav />
-      <main className="page">
-        <Hero />
-        <Beneficios />
-        <Modulos />
-        <Integraciones />
-        <Comparativa />
-        <Caso />
-        <Seguridad />
-        <Roles />
-        <Demo />
-        <Gallery />
-        <Proceso />
-        <Tutoriales />
-        <Impacto />
-        <FAQ />
-        <Contacto />
-      </main>
+      <Routes>
+        <Route path="/" element={<LandingPage progressBarRef={progressBarRef} />} />
+        <Route path="/tutoriales" element={<BibliotecaPage />} />
+      </Routes>
       <Footer />
       <ScrollToTop />
     </>

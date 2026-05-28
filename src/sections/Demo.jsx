@@ -5,20 +5,20 @@ const STEPS = [
   {
     id: 'admisiones',
     label: 'Admisiones',
-    title: 'Interesados y bitacora unificados',
-    desc: 'Registra visitas, origenes y seguimiento para convertir interesados en estudiantes.',
+    title: 'Interesados y bitácora unificados',
+    desc: 'Registra visitas, orígenes y seguimiento para convertir interesados en estudiantes.',
     metrics: [
-      { count: 1, suffix: ' bitacora', label: 'seguimiento diario' },
+      { count: 1, suffix: ' bitácora', label: 'seguimiento diario' },
       { count: 1, suffix: ' registro', label: 'por contacto' },
     ],
   },
   {
     id: 'matriculas',
-    label: 'Matriculas',
-    title: 'Matriculas con reglas claras',
-    desc: 'Cupos, promociones y estado academico siempre actualizados.',
+    label: 'Matrículas',
+    title: 'Matrículas con reglas claras',
+    desc: 'Cupos, promociones y estado académico siempre actualizados.',
     metrics: [
-      { count: 6, suffix: ' estados', label: 'seguimiento de matricula' },
+      { count: 6, suffix: ' estados', label: 'seguimiento de matrícula' },
       { count: 0, suffix: '', label: 'datos duplicados' },
     ],
   },
@@ -28,7 +28,7 @@ const STEPS = [
     title: 'Pagos y comprobantes listos',
     desc: 'Registra pagos, valida saldos y genera comprobantes al instante.',
     metrics: [
-      { count: 2, suffix: ' vistas', label: 'cobros pendientes e historico' },
+      { count: 2, suffix: ' vistas', label: 'cobros pendientes e histórico' },
       { count: 1, suffix: ' comprobante', label: 'por cada pago' },
     ],
   },
@@ -36,10 +36,10 @@ const STEPS = [
     id: 'reportes',
     label: 'Reportes',
     title: 'Reportes que accionan decisiones',
-    desc: 'Indicadores de seguridad, sesiones y permisos para auditoria interna.',
+    desc: 'Indicadores de seguridad, sesiones y permisos para auditoría interna.',
     metrics: [
       { count: 5, suffix: ' paneles', label: 'indicadores clave' },
-      { count: 100, suffix: '%', label: 'trazabilidad academica' },
+      { count: 100, suffix: '%', label: 'trazabilidad académica' },
     ],
   },
 ]
@@ -65,8 +65,8 @@ export default function Demo() {
   return (
     <section className="section demo" id="demo" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <div className="section-header" data-reveal>
-        <h2>Demo interactivo del flujo academico</h2>
-        <p>Explora como se conectan los pasos clave de Ademy en una operacion real.</p>
+        <h2>Demo interactivo del flujo académico</h2>
+        <p>Explora cómo se conectan los pasos clave de Ademy en una operación real.</p>
       </div>
       <div className="demo-grid">
         <div className="demo-steps" data-reveal>

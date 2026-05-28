@@ -1,9 +1,9 @@
 const MODULOS = [
-  'Interesados y bitacora',
+  'Interesados y bitácora',
   'Centros y empresas',
-  'Niveles y catalogos',
+  'Niveles y catálogos',
   'Estudiantes y historial',
-  'Matriculas y promociones',
+  'Matrículas y promociones',
   'Pagos y comprobantes',
   'Bonificaciones',
   'Usuarios y roles',
@@ -13,8 +13,8 @@ export default function Modulos() {
   return (
     <section className="section" id="modulos">
       <div className="section-header" data-reveal>
-        <h2>Modulos principales del sistema</h2>
-        <p>Funcionalidades reales del producto en operacion.</p>
+        <h2>Módulos principales del sistema</h2>
+        <p>Funcionalidades reales del producto en operación.</p>
       </div>
       <div className="grid-4">
         {MODULOS.map((mod) => (

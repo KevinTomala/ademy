@@ -40,7 +40,7 @@ export default function FAQ() {
     <section className="section" id="faq">
       <div className="section-header" data-reveal>
         <h2>Preguntas frecuentes</h2>
-        <p>Respuestas claras para avanzar rapido con tu equipo.</p>
+        <p>Respuestas claras para avanzar rápido con tu equipo.</p>
       </div>
       <div className="faq">
         {ITEMS.map((item, idx) => (

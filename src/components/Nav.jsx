@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 const NAV_LINKS = [
   ['#beneficios', 'Beneficios'],
-  ['#modulos', 'Modulos'],
+  ['#modulos', 'Módulos'],
   ['#demo', 'Demo'],
   ['#capturas', 'Capturas'],
   ['#proceso', 'Proceso'],
@@ -11,15 +12,12 @@ const NAV_LINKS = [
   ['#contacto', 'Contacto'],
 ]
 
-function scrollTo(href) {
-  const el = document.querySelector(href)
-  if (!el) return
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
 export default function Nav() {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isLanding = location.pathname === '/'
 
   useEffect(() => {
     const el = ref.current
@@ -28,20 +26,25 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleLink = (e, href) => {
+  const handleLink = (e, hash) => {
     e.preventDefault()
     setIsOpen(false)
-    scrollTo(href)
+    if (isLanding) {
+      const el = document.querySelector(hash)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      navigate('/' + hash)
+    }
   }
 
   return (
     <header ref={ref} className={`nav${isOpen ? ' is-open' : ''}`}>
-      <div className="brand">
+      <Link to="/" className="brand" style={{ textDecoration: 'none' }}>
         <div className="brand-mark" aria-hidden="true">
           <img src="/assets/ademy-logo.png" alt="" />
         </div>
         <div className="brand-text">Ademy</div>
-      </div>
+      </Link>
 
       <nav className="nav-links" id="nav-menu">
         {NAV_LINKS.map(([href, label]) => (
