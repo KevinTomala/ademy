@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ScrollProgress from './components/ScrollProgress'
 import ScrollToTop from './components/ScrollToTop'
 import Nav from './components/Nav'
@@ -6,9 +6,11 @@ import Hero from './components/Hero'
 import Impacto from './sections/Impacto'
 import Beneficios from './sections/Beneficios'
 import Modulos from './sections/Modulos'
+import Integraciones from './sections/Integraciones'
 import Comparativa from './sections/Comparativa'
 import Caso from './sections/Caso'
 import Seguridad from './sections/Seguridad'
+import Roles from './sections/Roles'
 import Demo from './sections/Demo'
 import Gallery from './sections/Gallery'
 import Proceso from './sections/Proceso'
@@ -21,14 +23,15 @@ import Footer from './sections/Footer'
 
 export default function App() {
   const [scrollY, setScrollY] = useState(0)
-  const [progress, setProgress] = useState(0)
+  const progressBarRef = useRef(null)
 
   useEffect(() => {
+    const bar = progressBarRef.current
     const update = () => {
       const y = window.scrollY
       const docH = document.documentElement.scrollHeight - document.documentElement.clientHeight
       setScrollY(y)
-      setProgress(docH ? Math.min((y / docH) * 100, 100) : 0)
+      if (bar) bar.style.width = (docH ? Math.min((y / docH) * 100, 100) : 0) + '%'
     }
     window.addEventListener('scroll', update, { passive: true })
     update()
@@ -79,23 +82,25 @@ export default function App() {
     })
 
     return () => cleanup.forEach((fn) => fn())
-  })
+  }, [])
 
   return (
     <>
       <div className="wave-bg" aria-hidden="true">
         <span className="wave-layer wave-layer--single"></span>
       </div>
-      <ScrollProgress progress={progress} />
+      <ScrollProgress ref={progressBarRef} />
       <Nav isSticky={scrollY > 12} />
-      <div className="page">
+      <main className="page">
         <Hero />
         <Impacto />
         <Beneficios />
         <Modulos />
+        <Integraciones />
         <Comparativa />
         <Caso />
         <Seguridad />
+        <Roles />
         <Demo />
         <Gallery />
         <Proceso />
@@ -104,8 +109,8 @@ export default function App() {
         <FAQ />
         <Contacto />
         <CTASection />
-        <Footer />
-      </div>
+      </main>
+      <Footer />
       <ScrollToTop visible={scrollY > 500} />
     </>
   )

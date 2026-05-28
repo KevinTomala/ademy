@@ -1,18 +1,28 @@
 const STEPS = [
   {
     num: '1',
-    title: 'Levantamiento y roles',
-    desc: 'Mapeamos procesos, roles y permisos que usara cada area.',
+    title: 'El interesado llega',
+    desc: 'Se registra con su fuente de origen — redes, referido o web. Queda en seguimiento sin perder el contacto.',
   },
   {
     num: '2',
-    title: 'Configuracion y catalogos',
-    desc: 'Parametrizamos centros, niveles, promociones y reglas de negocio.',
+    title: 'Se matricula',
+    desc: 'La secretaria selecciona el curso y la promoción. El contrato de inscripción se genera automáticamente.',
   },
   {
     num: '3',
-    title: 'Capacitacion y puesta en marcha',
-    desc: 'Capacitacion por rol, piloto y acompanamiento del primer ciclo.',
+    title: 'El cajero registra el pago',
+    desc: 'Se emite el comprobante al estudiante por correo. Si hay facturación, va al SRI sin pasos extra.',
+  },
+  {
+    num: '4',
+    title: 'Documentos validados',
+    desc: 'La secretaria sube la cédula. El sistema la verifica y notifica el resultado sin revisión manual.',
+  },
+  {
+    num: '5',
+    title: 'Diploma generado',
+    desc: 'Al completar el curso, el diploma en PDF sale con logo, firma y datos del estudiante listo para entregar.',
   },
 ]
 
@@ -20,8 +30,8 @@ export default function Proceso() {
   return (
     <section className="section" id="proceso">
       <div className="section-header" data-reveal>
-        <h2>Implementacion clara y acompanamiento real</h2>
-        <p>Te guiamos desde el primer dia para que el equipo adopte el sistema sin friccion.</p>
+        <h2>Así trabaja tu academia con Ademy</h2>
+        <p>Desde que llega el interesado hasta que recibe su diploma — todo en un solo sistema.</p>
       </div>
       <div className="steps">
         {STEPS.map((s) => (

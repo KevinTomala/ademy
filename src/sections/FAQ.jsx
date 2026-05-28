@@ -2,28 +2,32 @@ import { useState } from 'react'
 
 const ITEMS = [
   {
-    q: 'Cuanto tiempo toma implementar Ademy?',
-    a: 'Entre 2 y 4 semanas, segun sedes, volumen de datos y reglas de negocio.',
+    q: '¿Cuánto cuesta Ademy?',
+    a: 'El precio depende del tamaño de tu institución, el número de sedes y los módulos que necesitas. Agenda una demo y te preparamos una cotización ajustada a tu caso.',
   },
   {
-    q: 'Se puede migrar informacion historica?',
-    a: 'Si. Importamos estudiantes, matriculas, pagos y catalogos con plantillas asistidas.',
+    q: '¿Funciona con el SRI de Ecuador?',
+    a: 'Sí. Ademy se integra con Contifico para emitir facturas electrónicas válidas ante el SRI automáticamente cuando se registra un pago.',
   },
   {
-    q: 'Incluye soporte y capacitacion?',
-    a: 'Incluimos sesiones por rol, videos on demand y soporte prioritario en el arranque.',
+    q: '¿Cuánto tiempo toma implementar Ademy?',
+    a: 'Entre 2 y 4 semanas según el número de sedes, volumen de datos y reglas de negocio. Acompañamos todo el proceso.',
   },
   {
-    q: 'Puedo personalizar reportes y procesos?',
-    a: 'Claro. Ajustamos flujos, etiquetas y permisos segun tus indicadores clave.',
+    q: '¿Se puede migrar información histórica?',
+    a: 'Sí. Importamos estudiantes, matrículas, pagos y catálogos con plantillas asistidas para que no pierdas nada.',
   },
   {
-    q: 'Que opciones de hosting existen?',
-    a: 'Se puede instalar en tu servidor o en una nube gestionada segun requerimientos.',
+    q: '¿Incluye capacitación para mi equipo?',
+    a: 'Incluimos sesiones por rol — secretaria, cajero, administrador — más videos de referencia y soporte prioritario durante el arranque.',
   },
   {
-    q: 'Como se protege la informacion?',
-    a: 'Control por roles, monitoreo y respaldo planificado para datos sensibles.',
+    q: '¿Cómo se protege la información de mis estudiantes?',
+    a: 'Cada usuario accede solo a lo que le corresponde según su rol. Los documentos se almacenan en la nube con acceso seguro, y cada cambio queda registrado con quién lo hizo y cuándo.',
+  },
+  {
+    q: '¿Funciona con múltiples sedes?',
+    a: 'Sí. Puedes gestionar todas tus sedes desde una sola plataforma, con reportes independientes por centro.',
   },
 ]
 

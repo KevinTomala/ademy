@@ -1,15 +1,21 @@
 const ANTES = [
   'Datos duplicados en hojas y sistemas',
   'Seguimiento manual de interesados',
-  'Pagos sin conciliacion rapida',
-  'Reportes tardios y sin trazabilidad',
+  'Pagos sin conciliación rápida',
+  'Diplomas impresos o enviados a mano',
+  'Sin saber quién refirió al estudiante',
+  'Facturas al SRI por correo o manualmente',
+  'Reportes tardíos y sin trazabilidad',
 ]
 
 const DESPUES = [
-  'Un solo registro por estudiante',
-  'Bitacora y seguimiento centralizado',
-  'Pagos con estado y comprobantes',
-  'Indicadores listos para decisiones',
+  'Un solo registro por estudiante, sin repetir datos',
+  'Bitácora y seguimiento centralizado con origen',
+  'Pagos con estado, comprobante y factura automática',
+  'Diplomas en PDF generados con un clic',
+  'Comisiones calculadas y trazadas automáticamente',
+  'Factura emitida al SRI cuando el cajero registra el pago',
+  'Indicadores en tiempo real para decidir hoy',
 ]
 
 export default function Comparativa() {
