@@ -1,7 +1,7 @@
 ﻿const revealItems = document.querySelectorAll("[data-reveal]");
 
 const revealObserver = new IntersectionObserver(
-  (entries) => {
+  (entries) => { 
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
