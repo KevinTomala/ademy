@@ -1,0 +1,31 @@
+node_modules
+dist
+.env
+.env.local
+
+# ==========================
+# Builds / caches
+# ==========================
+build/
+dist/
+coverage/
+.vite/
+**/.vite/
+*.tsbuildinfo
+.claude/settings.local.json
+# ==========================
+# Datos locales
+# ==========================
+docker-data/
+mysql-data/
+backend/.cache/puppeteer/
+backend/uploads/
+backend/storage/
+.vscode
+AGENTS.md
+skills-lock.json
+CLAUDE.md
+initNew.sql
+.agents/
+.claude/
+docker-compose.prod.yml
