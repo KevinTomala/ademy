@@ -15,10 +15,8 @@ import Demo from './sections/Demo'
 import Gallery from './sections/Gallery'
 import Proceso from './sections/Proceso'
 import Tutoriales from './sections/Tutoriales'
-import Testimonios from './sections/Testimonios'
 import FAQ from './sections/FAQ'
 import Contacto from './sections/Contacto'
-import CTASection from './sections/CTASection'
 import Footer from './sections/Footer'
 
 export default function App() {
@@ -96,11 +94,9 @@ export default function App() {
         <Gallery />
         <Proceso />
         <Tutoriales />
-        <Testimonios />
         <Impacto />
         <FAQ />
         <Contacto />
-        <CTASection />
       </main>
       <Footer />
       <ScrollToTop />

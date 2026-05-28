@@ -6,14 +6,13 @@ export default function CTASection() {
         <p>Agenda una demo personalizada y conoce como optimizar tu operacion academica.</p>
       </div>
       <div className="cta-actions">
-        <a className="btn btn-primary" href="mailto:ventas@ademy.com">
+        <a className="btn btn-primary" href="#contacto">
           Agendar demo
         </a>
-        <a className="btn btn-ghost" href="mailto:contacto@ademy.com">
+        <a className="btn btn-ghost" href="#contacto">
           Hablar con el equipo
         </a>
       </div>
-      <small className="cta-note">Actualiza estos correos con tus datos reales.</small>
     </section>
   )
 }
