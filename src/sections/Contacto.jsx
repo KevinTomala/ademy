@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-const ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+const ENDPOINT = '/api/demo'
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function Contacto() {
   const [status, setStatus] = useState({ msg: '', type: '' })
@@ -19,7 +21,7 @@ export default function Contacto() {
 
     const emailField = form.querySelector('input[type="email"]')
     if (emailField) {
-      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value.trim())
+      const emailValid = EMAIL_RE.test(emailField.value.trim())
       emailField.classList.toggle('is-invalid', !emailValid)
       if (!emailValid) hasError = true
     }
@@ -29,22 +31,25 @@ export default function Contacto() {
       return
     }
 
-    if (ENDPOINT.includes('YOUR_FORM_ID')) {
-      setStatus({ msg: 'Configura el endpoint del formulario para enviar la solicitud.', type: 'is-error' })
-      return
-    }
-
     setStatus({ msg: 'Enviando solicitud...', type: '' })
+
+    const data = {
+      nombre: form.nombre.value.trim(),
+      email: form.email.value.trim(),
+      institucion: form.institucion.value.trim(),
+      sedes: form.sedes?.value.trim() || '',
+      mensaje: form.mensaje?.value.trim() || '',
+    }
 
     try {
       const res = await fetch(ENDPOINT, {
         method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
       })
       if (res.ok) {
         form.reset()
-        setStatus({ msg: 'Listo! Te contactaremos muy pronto.', type: 'is-success' })
+        setStatus({ msg: '¡Listo! Te contactaremos muy pronto.', type: 'is-success' })
       } else {
         setStatus({ msg: 'No pudimos enviar la solicitud. Intenta nuevamente.', type: 'is-error' })
       }

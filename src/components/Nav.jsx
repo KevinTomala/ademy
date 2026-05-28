@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const NAV_LINKS = [
   ['#beneficios', 'Beneficios'],
@@ -17,8 +17,16 @@ function scrollTo(href) {
   el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-export default function Nav({ isSticky }) {
+export default function Nav() {
+  const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    const onScroll = () => el.classList.toggle('is-sticky', window.scrollY > 12)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const handleLink = (e, href) => {
     e.preventDefault()
@@ -27,7 +35,7 @@ export default function Nav({ isSticky }) {
   }
 
   return (
-    <header className={`nav${isSticky ? ' is-sticky' : ''}${isOpen ? ' is-open' : ''}`}>
+    <header ref={ref} className={`nav${isOpen ? ' is-open' : ''}`}>
       <div className="brand">
         <div className="brand-mark" aria-hidden="true">
           <img src="/assets/ademy-logo.png" alt="" />

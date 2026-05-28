@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import ScrollProgress from './components/ScrollProgress'
 import ScrollToTop from './components/ScrollToTop'
 import Nav from './components/Nav'
@@ -22,7 +22,6 @@ import CTASection from './sections/CTASection'
 import Footer from './sections/Footer'
 
 export default function App() {
-  const [scrollY, setScrollY] = useState(0)
   const progressBarRef = useRef(null)
 
   useEffect(() => {
@@ -30,30 +29,12 @@ export default function App() {
     const update = () => {
       const y = window.scrollY
       const docH = document.documentElement.scrollHeight - document.documentElement.clientHeight
-      setScrollY(y)
       if (bar) bar.style.width = (docH ? Math.min((y / docH) * 100, 100) : 0) + '%'
     }
     window.addEventListener('scroll', update, { passive: true })
-    update()
     return () => window.removeEventListener('scroll', update)
   }, [])
 
-  useEffect(() => {
-    const items = document.querySelectorAll('[data-reveal]')
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible')
-            obs.unobserve(e.target)
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
-    items.forEach((i) => obs.observe(i))
-    return () => obs.disconnect()
-  }, [])
 
   useEffect(() => {
     if (!window.matchMedia('(hover: hover)').matches) return
@@ -90,10 +71,9 @@ export default function App() {
         <span className="wave-layer wave-layer--single"></span>
       </div>
       <ScrollProgress ref={progressBarRef} />
-      <Nav isSticky={scrollY > 12} />
+      <Nav />
       <main className="page">
         <Hero />
-        <Impacto />
         <Beneficios />
         <Modulos />
         <Integraciones />
@@ -106,12 +86,13 @@ export default function App() {
         <Proceso />
         <Tutoriales />
         <Testimonios />
+        <Impacto />
         <FAQ />
         <Contacto />
         <CTASection />
       </main>
       <Footer />
-      <ScrollToTop visible={scrollY > 500} />
+      <ScrollToTop />
     </>
   )
 }
