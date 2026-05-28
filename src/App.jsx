@@ -37,6 +37,17 @@ export default function App() {
 
 
   useEffect(() => {
+    const els = document.querySelectorAll('[data-reveal], [data-reveal="left"], [data-reveal="right"]')
+    if (!els.length) return
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); observer.unobserve(e.target) } }),
+      { threshold: 0.12 }
+    )
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     if (!window.matchMedia('(hover: hover)').matches) return
     const targets = document.querySelectorAll('.card, .chip, .step, .quote, .demo-panel, .screen')
     const maxTilt = 6

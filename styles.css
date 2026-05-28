@@ -90,6 +90,7 @@ a {
   position: relative;
   padding: var(--nav-height) 6vw 80px;
   z-index: 1;
+  overflow: clip;
 }
 
 .page::before,
@@ -1045,19 +1046,146 @@ a {
 }
 
 .footer {
-  margin-top: 60px;
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  background: linear-gradient(175deg, rgba(13, 148, 136, 0.06), rgba(14, 165, 233, 0.04));
   border-top: 1px solid var(--stroke);
-  padding-top: 28px;
+  padding: 72px 40px 0;
   color: var(--muted);
 }
 
-.footer-links {
+.footer-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 56px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.footer-contact {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 4px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a.footer-contact-item:hover {
+  color: var(--brand);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.footer-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(13, 148, 136, 0.08);
+  border: 1px solid rgba(13, 148, 136, 0.18);
+  color: var(--brand);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.footer-social-btn:hover {
+  background: var(--brand);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-col-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  opacity: 0.5;
+}
+
+.footer-col-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col-list a {
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-col-list a:hover {
+  color: var(--brand);
+}
+
+.footer-bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 0 28px;
+  border-top: 1px solid var(--stroke);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.footer-legal {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-legal a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-legal a:hover {
+  color: var(--brand);
 }
 
 .video-card {
@@ -1320,15 +1448,157 @@ a {
 }
 
 /* ── Scroll reveal ─────────────────────────────────────────────────── */
-[data-reveal],
-[data-reveal].is-visible,
-[data-reveal="left"],
-[data-reveal="right"] {
-  opacity: 1;
-  transform: none;
-  transition: none;
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+[data-reveal="left"] {
+  opacity: 0;
+  transform: translateX(-36px);
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-reveal="right"] {
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-reveal].is-visible,
+[data-reveal="left"].is-visible,
+[data-reveal="right"].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* ── Staggered reveal delays for grid children ──────────────────────── */
+.grid-3 [data-reveal]:nth-child(1),
+.grid-4 [data-reveal]:nth-child(1),
+.grid-2 [data-reveal]:nth-child(1) { transition-delay: 0s; }
+
+.grid-3 [data-reveal]:nth-child(2),
+.grid-4 [data-reveal]:nth-child(2),
+.grid-2 [data-reveal]:nth-child(2) { transition-delay: 0.1s; }
+
+.grid-3 [data-reveal]:nth-child(3),
+.grid-4 [data-reveal]:nth-child(3) { transition-delay: 0.2s; }
+
+.grid-4 [data-reveal]:nth-child(4) { transition-delay: 0.3s; }
+
+.steps [data-reveal]:nth-child(1) { transition-delay: 0s; }
+.steps [data-reveal]:nth-child(2) { transition-delay: 0.12s; }
+.steps [data-reveal]:nth-child(3) { transition-delay: 0.24s; }
+
+.faq [data-reveal]:nth-child(1) { transition-delay: 0s; }
+.faq [data-reveal]:nth-child(2) { transition-delay: 0.08s; }
+.faq [data-reveal]:nth-child(3) { transition-delay: 0.16s; }
+.faq [data-reveal]:nth-child(4) { transition-delay: 0.24s; }
+.faq [data-reveal]:nth-child(5) { transition-delay: 0.32s; }
+
+/* ── Hero entrance animation ─────────────────────────────────────────── */
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-badge     { animation: hero-enter 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both; }
+.hero-text h1   { animation: hero-enter 0.65s cubic-bezier(0.4, 0, 0.2, 1) 0.22s both; }
+.hero-text p    { animation: hero-enter 0.65s cubic-bezier(0.4, 0, 0.2, 1) 0.34s both; }
+.hero-actions   { animation: hero-enter 0.65s cubic-bezier(0.4, 0, 0.2, 1) 0.44s both; }
+.hero-trust     { animation: hero-enter 0.65s cubic-bezier(0.4, 0, 0.2, 1) 0.56s both; }
+.hero-visual    { animation: hero-enter 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both; }
+
+/* ── Button shine sweep on hover ─────────────────────────────────────── */
+.btn-primary {
+  overflow: hidden;
+  position: relative;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.22) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 200% center;
+  transition: background-position 0.45s ease;
+  pointer-events: none;
+}
+.btn-primary:hover::after {
+  background-position: -100% center;
+}
+
+/* ── Card icon badge pop on hover ────────────────────────────────────── */
+.card .floating-icon,
+.card .step-number {
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card:hover .floating-icon,
+.card:hover .step-number {
+  transform: scale(1.18) rotate(-4deg);
+}
+
+/* ── Demo content fade-slide transition ──────────────────────────────── */
+.demo-content {
+  display: block;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+}
+.demo-panel {
+  position: relative;
+}
+.demo-content.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  position: relative;
+}
+
+/* ── Video modal scale-in ─────────────────────────────────────────────── */
+.video-modal__content {
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.video-modal.is-open .video-modal__content {
+  transform: none;
+}
+
+/* ── FAQ item smooth transition ──────────────────────────────────────── */
+.faq-item {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.faq-item.is-open {
+  border-color: rgba(13, 148, 136, 0.28);
+  box-shadow: 0 20px 48px rgba(13, 148, 136, 0.1);
+}
+
+/* ── Nav link active indicator ───────────────────────────────────────── */
+.nav-links a::after {
+  display: block !important;
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--brand);
+  border-radius: 999px;
+  transform: scaleX(0);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
 
 /* Section header accent line */
 .section-header h2 {
@@ -1550,11 +1820,32 @@ a {
   }
 
   .footer {
+    padding: 48px 24px 0;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-bottom {
     flex-direction: column;
+    gap: 12px;
+    text-align: center;
   }
 
   .nav-links {
     gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
   }
 }
 
