@@ -1,47 +1,15 @@
 import { useState, useEffect } from 'react'
-import Counter from '../components/Counter'
+import { FaClipboardList, FaUsers, FaCalendarCheck, FaCreditCard } from 'react-icons/fa'
+import DemoBitacora from '../components/DemoBitacora'
+import DemoMatriculas from '../components/DemoMatriculas'
+import DemoPagos from '../components/DemoPagos'
+import DemoEstudiantes from '../components/DemoEstudiantes'
 
-const STEPS = [
-  {
-    id: 'admisiones',
-    label: 'Admisiones',
-    title: 'Interesados y bitácora unificados',
-    desc: 'Registra visitas, orígenes y seguimiento para convertir interesados en estudiantes.',
-    metrics: [
-      { count: 1, suffix: ' bitácora', label: 'seguimiento diario' },
-      { count: 1, suffix: ' registro', label: 'por contacto' },
-    ],
-  },
-  {
-    id: 'matriculas',
-    label: 'Matrículas',
-    title: 'Matrículas con reglas claras',
-    desc: 'Cupos, promociones y estado académico siempre actualizados.',
-    metrics: [
-      { count: 6, suffix: ' estados', label: 'seguimiento de matrícula' },
-      { count: 0, suffix: '', label: 'datos duplicados' },
-    ],
-  },
-  {
-    id: 'pagos',
-    label: 'Pagos',
-    title: 'Pagos y comprobantes listos',
-    desc: 'Registra pagos, valida saldos y genera comprobantes al instante.',
-    metrics: [
-      { count: 2, suffix: ' vistas', label: 'cobros pendientes e histórico' },
-      { count: 1, suffix: ' comprobante', label: 'por cada pago' },
-    ],
-  },
-  {
-    id: 'reportes',
-    label: 'Reportes',
-    title: 'Reportes que accionan decisiones',
-    desc: 'Indicadores de seguridad, sesiones y permisos para auditoría interna.',
-    metrics: [
-      { count: 5, suffix: ' paneles', label: 'indicadores clave' },
-      { count: 100, suffix: '%', label: 'trazabilidad académica' },
-    ],
-  },
+const TABS = [
+  { id: 'admisiones',  label: 'Admisiones',  icon: <FaClipboardList /> },
+  { id: 'estudiantes', label: 'Estudiantes', icon: <FaUsers /> },
+  { id: 'matriculas',  label: 'Matrículas',  icon: <FaCalendarCheck /> },
+  { id: 'pagos',       label: 'Pagos',       icon: <FaCreditCard /> },
 ]
 
 export default function Demo() {
@@ -50,58 +18,52 @@ export default function Demo() {
 
   useEffect(() => {
     if (paused) return
-    const order = STEPS.map((s) => s.id)
+    const ids = TABS.map((t) => t.id)
     const timer = setInterval(() => {
       setActive((cur) => {
-        const idx = order.indexOf(cur)
-        return order[(idx + 1) % order.length]
+        const idx = ids.indexOf(cur)
+        return ids[(idx + 1) % ids.length]
       })
-    }, 5000)
+    }, 6000)
     return () => clearInterval(timer)
   }, [paused])
 
-  const current = STEPS.find((s) => s.id === active)
-
   return (
-    <section className="section demo" id="demo" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <section
+      className="section demo"
+      id="demo"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="section-header" data-reveal>
-        <h2>Demo interactivo del flujo académico</h2>
-        <p>Explora cómo se conectan los pasos clave de Ademy en una operación real.</p>
+        <h2>Pruébalo tú mismo</h2>
+        <p>Explora los módulos clave de Ademy con datos de ejemplo — sin registro, sin contraseña.</p>
       </div>
-      <div className="demo-grid">
-        <div className="demo-steps" data-reveal>
-          {STEPS.map((s) => (
-            <button
-              key={s.id}
-              className={`demo-step${active === s.id ? ' is-active' : ''}`}
-              type="button"
-              onClick={() => setActive(s.id)}
-            >
-              {s.label}
-            </button>
-          ))}
-        </div>
 
-        <div className="demo-panel" data-reveal>
-          {current && (
-            <div className="demo-content is-active" key={current.id}>
-              <h3>{current.title}</h3>
-              <p>{current.desc}</p>
-              <div className="demo-metrics">
-                {current.metrics.map((m, i) => (
-                  <div key={i}>
-                    <Counter count={m.count} suffix={m.suffix} />
-                    <span className="metric-label">{m.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          <div className="demo-preview" aria-hidden="true">
-            <div className="demo-preview__panel"></div>
-            <div className="demo-preview__panel"></div>
-            <div className="demo-preview__panel wide"></div>
+      <div className="demo-shell" data-reveal>
+        <aside className="demo-shell-sidebar">
+          <div className="demo-shell-sidebar-brand">
+            <img src="/assets/ademy-logo.png" alt="Ademy" className="demo-shell-logo" />
           </div>
+          <nav className="demo-shell-nav">
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                className={`demo-shell-nav-item${active === t.id ? ' is-active' : ''}`}
+                onClick={() => setActive(t.id)}
+              >
+                <span className="demo-shell-nav-icon">{t.icon}</span>
+                {t.label}
+              </button>
+            ))}
+          </nav>
+        </aside>
+
+        <div className="demo-shell-body">
+          {active === 'admisiones' && <DemoBitacora />}
+          {active === 'matriculas' && <DemoMatriculas />}
+          {active === 'pagos' && <DemoPagos />}
+          {active === 'estudiantes' && <DemoEstudiantes />}
         </div>
       </div>
     </section>
