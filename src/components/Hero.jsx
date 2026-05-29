@@ -1,3 +1,4 @@
+import { FaArrowRight, FaPlay, FaCheck, FaBolt } from 'react-icons/fa'
 import Counter from './Counter'
 
 export default function Hero() {
@@ -18,15 +19,15 @@ export default function Hero() {
         </p>
         <div className="hero-actions">
           <a className="btn btn-primary" href="#contacto">
-            Quiero una demo gratis →
+            Quiero una demo gratis <FaArrowRight style={{display:'inline', verticalAlign:'middle', marginLeft:6}} />
           </a>
           <a className="btn btn-ghost" href="#tutoriales">
-            ▶ Ver cómo funciona (2 min)
+            <FaPlay style={{display:'inline', verticalAlign:'middle', marginRight:6}} /> Ver cómo funciona (2 min)
           </a>
         </div>
         <div className="hero-trust">
           <div className="hero-trust-item">
-            <Counter count={70} prefix="-" suffix="%" />
+            <Counter count={60} prefix="-" suffix="%" />
             <span className="metric-label">menos tiempo por matrícula</span>
           </div>
           <div className="hero-trust-divider"></div>
@@ -61,14 +62,14 @@ export default function Hero() {
           </div>
         </div>
         <div className="floating-card floating-card--top">
-          <div className="floating-icon">✓</div>
+          <div className="floating-icon"><FaCheck /></div>
           <div>
             <strong>Matrícula registrada</strong>
             <span>hace 2 minutos · Pago confirmado</span>
           </div>
         </div>
         <div className="floating-card floating-card--bottom">
-          <div className="floating-icon floating-icon--blue">⚡</div>
+          <div className="floating-icon floating-icon--blue"><FaBolt /></div>
           <div>
             <strong>Factura SRI generada</strong>
             <span>automáticamente</span>

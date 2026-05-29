@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FaArrowLeft } from 'react-icons/fa'
 
 const MODULOS = ['Todos', 'Matrículas', 'Calificaciones', 'Comunicados', 'Horarios', 'Pagos', 'Reportes']
 
@@ -26,7 +27,7 @@ export default function BibliotecaPage() {
     <main className="biblioteca-page">
       <div className="biblioteca-header">
         <Link to="/" className="biblioteca-back">
-          ← Volver al inicio
+          <FaArrowLeft style={{verticalAlign:'middle', marginRight:6}} />Volver al inicio
         </Link>
         <h1>Tutoriales y capacitación</h1>
         <p>Videos cortos organizados por módulo para que tú y tu equipo dominen Ademy.</p>

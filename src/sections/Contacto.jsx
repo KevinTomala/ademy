@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
 
 const ENDPOINT = '/api/demo'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -48,34 +49,20 @@ const CONTACT_ITEMS = [
     label: 'Email',
     value: 'kevintomala.27@gmail.com',
     href: 'mailto:kevintomala.27@gmail.com',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <rect x="2" y="4" width="20" height="16" rx="2" />
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-      </svg>
-    ),
+    icon: <FaEnvelope size={20} aria-hidden="true" />,
   },
   {
     label: 'WhatsApp',
     value: '+593 996659937',
     href: 'https://wa.me/593996659937',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-    ),
+    icon: <FaWhatsapp size={20} aria-hidden="true" />,
   },
   {
     label: 'Ubicación',
     value: 'Piedrahita 824 entre Av. Quito y Av. Machala, Guayaquil, Ecuador',
     sub: 'Lunes a Viernes: 08:00 - 16:00',
     href: null,
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-        <circle cx="12" cy="10" r="3" />
-      </svg>
-    ),
+    icon: <FaMapMarkerAlt size={20} aria-hidden="true" />,
   },
 ]
 
@@ -401,9 +388,7 @@ export default function Contacto() {
               disabled={submitDisabled}
             >
               {isDemo ? 'Solicitar demo' : 'Enviar mensaje'}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M22 2 11 13" /><path d="M22 2 15 22 11 13 2 9l20-7z" />
-              </svg>
+              <FaPaperPlane size={14} style={{marginLeft:6}} aria-hidden="true" />
             </button>
           </form>
         </div>
