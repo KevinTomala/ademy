@@ -13,7 +13,7 @@ export default function Hero() {
           <span className="accent">Todo lo de tu academia, en un solo lugar</span>
         </h1>
         <p>
-          Matrículas, cobros, diplomas y facturación electrónica al SRI — todo en un solo sistema.
+          Matrículas, cobros, diplomas y facturación electrónica al SRI. Todo en un solo sistema.
           Sin hojas de cálculo. Sin datos duplicados. Sin correos perdidos.
         </p>
         <div className="hero-actions">
@@ -49,7 +49,7 @@ export default function Hero() {
             <div className="dot dot-red"></div>
             <div className="dot dot-yellow"></div>
             <div className="dot dot-green"></div>
-            <span className="screen-title">Matrículas — Ademy</span>
+            <span className="screen-title">Matrículas · Ademy</span>
           </div>
           <div className="screen-body">
             <img

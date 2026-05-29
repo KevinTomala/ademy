@@ -19,7 +19,7 @@ const ITEMS = [
   },
   {
     q: '¿Incluye capacitación para mi equipo?',
-    a: 'Incluimos sesiones por rol — secretaria, cajero, administrador — más videos de referencia y soporte prioritario durante el arranque.',
+    a: 'Incluimos sesiones por rol: secretaria, cajero, administrador. Más videos de referencia y soporte prioritario durante el arranque.',
   },
   {
     q: '¿Cómo se protege la información de mis estudiantes?',

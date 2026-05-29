@@ -8,7 +8,7 @@ const QUOTES = [
     author: 'Director administrativo · Instituto técnico, Guayaquil',
   },
   {
-    text: '"La facturación al SRI ya no es un dolor de cabeza. El cajero registra el pago y la factura sale sola — cero errores manuales."',
+    text: '"La facturación al SRI ya no es un dolor de cabeza. El cajero registra el pago y la factura sale sola. Cero errores manuales."',
     author: 'Administradora financiera · Academia de capacitación, Cuenca',
   },
 ]

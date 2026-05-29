@@ -12,7 +12,7 @@ export default function Beneficios() {
         </article>
         <article className="card" data-reveal>
           <h3>Cobros organizados, sin esfuerzo</h3>
-          <p>El cajero registra el pago, el comprobante sale solo y la factura al SRI se emite automáticamente — sin pasos manuales.</p>
+          <p>El cajero registra el pago, el comprobante sale solo y la factura al SRI se emite automáticamente. Sin pasos manuales.</p>
         </article>
         <article className="card" data-reveal>
           <h3>Permisos claros para cada miembro</h3>
