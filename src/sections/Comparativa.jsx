@@ -1,71 +1,91 @@
+import { useState } from 'react'
+
 const ITEMS = [
   {
     proceso: 'Registro de estudiantes',
-    antes: 'Datos duplicados en hojas y sistemas',
+    icon: '🎓',
+    antes: 'Datos duplicados en hojas y sistemas distintos',
     despues: 'Un solo registro por estudiante, sin repetir datos',
   },
   {
     proceso: 'Seguimiento de interesados',
-    antes: 'Seguimiento manual sin origen claro',
+    icon: '📋',
+    antes: 'Seguimiento manual sin origen claro del contacto',
     despues: 'Bitácora centralizada con origen del contacto',
   },
   {
     proceso: 'Control de pagos',
+    icon: '💸',
     antes: 'Pagos sin conciliación rápida',
     despues: 'Pagos con estado, comprobante y factura automática',
   },
   {
     proceso: 'Diplomas y certificados',
-    antes: 'Impresos o enviados a mano',
-    despues: 'PDF generados con un clic',
+    icon: '📄',
+    antes: 'Impresos o enviados a mano uno por uno',
+    despues: 'PDF generados con un clic, sin esfuerzo',
   },
   {
     proceso: 'Referidos y comisiones',
+    icon: '🤝',
     antes: 'Sin saber quién refirió al estudiante',
     despues: 'Comisiones calculadas y trazadas automáticamente',
   },
   {
     proceso: 'Facturación electrónica',
-    antes: 'Facturas al SRI por correo o manualmente',
+    icon: '🧾',
+    antes: 'Facturas al SRI enviadas por correo o manualmente',
     despues: 'Factura emitida al SRI al registrar el pago',
   },
   {
     proceso: 'Reportes y métricas',
-    antes: 'Reportes tardíos y sin trazabilidad',
+    icon: '📊',
+    antes: 'Reportes tardíos y sin trazabilidad real',
     despues: 'Indicadores en tiempo real para decidir hoy',
   },
 ]
 
 export default function Comparativa() {
+  const [open, setOpen] = useState(null)
+
   return (
     <section className="section" id="comparativa">
       <div className="section-header" data-reveal>
         <h2>Antes vs. después</h2>
-        <p>Una comparación clara de procesos manuales frente a un flujo digital.</p>
+        <p>Descubre cómo Ademy transforma cada proceso de tu academia.</p>
       </div>
-      <div className="compare-table-wrap" data-reveal>
-        <table className="compare-table">
-          <thead>
-            <tr>
-              <th className="compare-th compare-th--proceso">Proceso</th>
-              <th className="compare-th compare-th--antes">
-                <span className="compare-th-badge compare-th-badge--red">✕ Antes</span>
-              </th>
-              <th className="compare-th compare-th--despues">
-                <span className="compare-th-badge compare-th-badge--green">✓ Después</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {ITEMS.map(({ proceso, antes, despues }, i) => (
-              <tr key={proceso} className={i % 2 === 0 ? 'compare-tr compare-tr--even' : 'compare-tr'}>
-                <td className="compare-td compare-td--proceso">{proceso}</td>
-                <td className="compare-td compare-td--antes">{antes}</td>
-                <td className="compare-td compare-td--despues">{despues}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="cmp-accordion" data-reveal>
+        {ITEMS.map(({ proceso, icon, antes, despues }, i) => {
+          const isOpen = open === i
+          return (
+            <div
+              key={proceso}
+              className={`cmp-item${isOpen ? ' cmp-item--open' : ''}`}
+            >
+              <button
+                className="cmp-trigger"
+                onClick={() => setOpen(isOpen ? null : i)}
+                aria-expanded={isOpen}
+              >
+                <span className="cmp-icon">{icon}</span>
+                <span className="cmp-proceso">{proceso}</span>
+                <span className="cmp-chevron">{isOpen ? '▲' : '▼'}</span>
+              </button>
+              {isOpen && (
+                <div className="cmp-body">
+                  <div className="cmp-col cmp-col--antes">
+                    <span className="cmp-badge cmp-badge--red">✕ Antes</span>
+                    <p>{antes}</p>
+                  </div>
+                  <div className="cmp-col cmp-col--despues">
+                    <span className="cmp-badge cmp-badge--green">✓ Después</span>
+                    <p>{despues}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
     </section>
   )
