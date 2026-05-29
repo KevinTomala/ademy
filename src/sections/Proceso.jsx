@@ -35,7 +35,7 @@ const STEPS = [
 
 export default function Proceso() {
   return (
-    <section className="section" id="proceso">
+    <section className="section section--wide" id="proceso">
       <div className="section-header" data-reveal>
         <h2>Así trabaja tu academia con Ademy</h2>
         <p>Desde que llega el interesado hasta que recibe su diploma. Todo en un solo sistema.</p>

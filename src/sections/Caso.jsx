@@ -3,7 +3,7 @@ import { FaShieldAlt, FaClock, FaDatabase, FaChartLine } from 'react-icons/fa'
 
 export default function Caso() {
   return (
-    <section className="section" id="caso">
+    <section className="section section--impact section--alt" id="caso">
       <div className="section-header" data-reveal>
         <h2>Resultado en una institución real</h2>
       </div>

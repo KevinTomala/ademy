@@ -1,5 +1,6 @@
-import { FaArrowRight, FaPlay, FaCheck, FaBolt } from 'react-icons/fa'
+import { FaArrowRight, FaPlay } from 'react-icons/fa'
 import Counter from './Counter'
+import HeroNetwork from './HeroNetwork'
 
 export default function Hero() {
   return (
@@ -10,18 +11,16 @@ export default function Hero() {
           Hecho para academias en Ecuador
         </div>
         <h1>
-          Ademy,{' '}
-          <span className="accent">Todo lo de tu academia, en un solo lugar</span>
+          <span className="accent">Todo lo de tu academia,</span>{' '}en un solo lugar
         </h1>
         <p>
-          Matrículas, cobros, diplomas y facturación electrónica al SRI. Todo en un solo sistema.
-          Sin hojas de cálculo. Sin datos duplicados. Sin correos perdidos.
+          Matrículas, cobros, diplomas y facturación electrónica al SRI. Todo conectado, todo trazable desde el primer contacto hasta el certificado final.
         </p>
         <div className="hero-actions">
           <a className="btn btn-primary" href="#contacto">
             Quiero una demo gratis <FaArrowRight style={{display:'inline', verticalAlign:'middle', marginLeft:6}} />
           </a>
-          <a className="btn btn-ghost" href="#tutoriales">
+          <a className="btn btn-ghost hero-cta-secondary" href="#tutoriales">
             <FaPlay style={{display:'inline', verticalAlign:'middle', marginRight:6}} /> Ver cómo funciona (2 min)
           </a>
         </div>
@@ -45,36 +44,7 @@ export default function Hero() {
 
       <div className="hero-visual" data-reveal="right">
         <div className="hero-glow"></div>
-        <div className="screen">
-          <div className="screen-header">
-            <div className="dot dot-red"></div>
-            <div className="dot dot-yellow"></div>
-            <div className="dot dot-green"></div>
-            <span className="screen-title">Matrículas · Ademy</span>
-          </div>
-          <div className="screen-body">
-            <img
-              className="screen-shot"
-              src="/assets/screens/matriculas_listado.png"
-              alt="Listado de matrículas en Ademy"
-              loading="eager"
-            />
-          </div>
-        </div>
-        <div className="floating-card floating-card--top">
-          <div className="floating-icon"><FaCheck /></div>
-          <div>
-            <strong>Matrícula registrada</strong>
-            <span>hace 2 minutos · Pago confirmado</span>
-          </div>
-        </div>
-        <div className="floating-card floating-card--bottom">
-          <div className="floating-icon floating-icon--blue"><FaBolt /></div>
-          <div>
-            <strong>Factura SRI generada</strong>
-            <span>automáticamente</span>
-          </div>
-        </div>
+        <HeroNetwork />
       </div>
     </section>
   )

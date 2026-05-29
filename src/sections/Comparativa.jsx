@@ -47,7 +47,7 @@ const ITEMS = [
 ]
 
 export default function Comparativa() {
-  const [open, setOpen] = useState(null)
+  const [open, setOpen] = useState(0)
 
   return (
     <section className="section" id="comparativa">

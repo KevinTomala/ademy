@@ -5,10 +5,8 @@ const NAV_LINKS = [
   ['#beneficios', 'Beneficios'],
   ['#modulos', 'Módulos'],
   ['#demo', 'Demo'],
-  ['#capturas', 'Capturas'],
   ['#proceso', 'Proceso'],
   ['#tutoriales', 'Videos'],
-  ['#faq', 'FAQ'],
   ['#contacto', 'Contacto'],
 ]
 
@@ -37,9 +35,19 @@ export default function Nav() {
     }
   }
 
+  const handleBrand = (e) => {
+    e.preventDefault()
+    setIsOpen(false)
+    if (isLanding) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      navigate('/')
+    }
+  }
+
   return (
     <header ref={ref} className={`nav${isOpen ? ' is-open' : ''}`}>
-      <Link to="/" className="brand" style={{ textDecoration: 'none' }}>
+      <Link to="/" className="brand" style={{ textDecoration: 'none' }} onClick={handleBrand}>
         <div className="brand-mark" aria-hidden="true">
           <img src="/assets/ademy-logo.png" alt="" />
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import ScrollProgress from './components/ScrollProgress'
 import ScrollToTop from './components/ScrollToTop'
 import Nav from './components/Nav'
@@ -9,6 +9,7 @@ import Modulos from './sections/Modulos'
 import Integraciones from './sections/Integraciones'
 import Comparativa from './sections/Comparativa'
 import Caso from './sections/Caso'
+import CTASection from './sections/CTASection'
 import Seguridad from './sections/Seguridad'
 import Roles from './sections/Roles'
 import Demo from './sections/Demo'
@@ -45,7 +46,7 @@ function LandingPage({ progressBarRef }) {
 
   useEffect(() => {
     if (!window.matchMedia('(hover: hover)').matches) return
-    const targets = document.querySelectorAll('.card, .chip, .step, .quote, .demo-panel, .screen')
+    const targets = document.querySelectorAll('.card, .chip, .step, .quote, .demo-panel, .screen:not(.screen--hero)')
     const maxTilt = 6
     const cleanup = []
     targets.forEach((target) => {
@@ -81,6 +82,7 @@ function LandingPage({ progressBarRef }) {
       <Roles />
       <Gallery />
       <Caso />
+      <CTASection />
       <Seguridad />
       <Demo />
       <Tutoriales />
@@ -103,6 +105,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage progressBarRef={progressBarRef} />} />
         <Route path="/tutoriales" element={<BibliotecaPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />
       <ScrollToTop />

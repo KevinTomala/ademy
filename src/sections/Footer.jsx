@@ -28,13 +28,7 @@ const NAV_GROUPS = [
   },
 ]
 
-import { FaInstagram, FaLinkedin, FaYoutube, FaEnvelope, FaPhone } from 'react-icons/fa'
-
-const SOCIALS = [
-  { label: 'Instagram', href: 'https://instagram.com',  icon: <FaInstagram size={18} /> },
-  { label: 'LinkedIn',  href: 'https://linkedin.com',   icon: <FaLinkedin  size={18} /> },
-  { label: 'YouTube',   href: 'https://youtube.com',    icon: <FaYoutube   size={18} /> },
-]
+import { FaEnvelope, FaPhone } from 'react-icons/fa'
 
 function scrollTo(href) {
   const el = document.querySelector(href)
@@ -66,21 +60,14 @@ export default function Footer() {
             Gestión académica moderna para instituciones que quieren crecer.
           </p>
           <div className="footer-contact">
-            <a href="mailto:contacto@ademy.com" className="footer-contact-item">
+            <a href="mailto:kevintomala.27@gmail.com" className="footer-contact-item">
               <FaEnvelope size={15} aria-hidden="true" />
-              contacto@ademy.com
+              kevintomala.27@gmail.com
             </a>
-            <span className="footer-contact-item">
+            <a href="https://wa.me/593996659937" className="footer-contact-item">
               <FaPhone size={15} aria-hidden="true" />
-              +54 11 0000-0000
-            </span>
-          </div>
-          <div className="footer-socials">
-            {SOCIALS.map(({ label, href, icon }) => (
-              <a key={label} href={href} className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label={label}>
-                {icon}
-              </a>
-            ))}
+              +593 996659937
+            </a>
           </div>
         </div>
 

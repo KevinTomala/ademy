@@ -29,7 +29,7 @@ const ITEMS = [
 
 export default function Integraciones() {
   return (
-    <section className="section" id="integraciones">
+    <section className="section section--alt" id="integraciones">
       <div className="section-header" data-reveal>
         <h2>Conectado con lo que necesitas</h2>
         <p>Ademy se integra con los servicios clave para que cada proceso fluya sin intervención manual.</p>

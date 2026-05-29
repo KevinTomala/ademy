@@ -35,7 +35,7 @@ const ROLES = [
 
 export default function Roles() {
   return (
-    <section className="section" id="roles">
+    <section className="section section--wide" id="roles">
       <div className="section-header" data-reveal>
         <h2>Diseñado para cada área de tu institución</h2>
         <p>Cada persona del equipo entra, ve lo que necesita y hace su trabajo sin fricción.</p>

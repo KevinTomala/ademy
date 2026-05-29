@@ -30,3 +30,5 @@ initNew.sql
 .agents/
 .claude/
 docker-compose.prod.yml
+LANDING_PAGE_CONTENT.md
+capture_landing.py

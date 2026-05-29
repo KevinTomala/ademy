@@ -1,6 +1,6 @@
 export default function Beneficios() {
   return (
-    <section className="section" id="beneficios">
+    <section className="section section--alt" id="beneficios">
       <div className="section-header" data-reveal>
         <h2>Beneficios que se sienten desde el primer día</h2>
         <p>Menos tiempo en tareas administrativas, más claridad para tomar decisiones.</p>
