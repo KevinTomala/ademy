@@ -13,7 +13,6 @@ import CTASection from './sections/CTASection'
 import Seguridad from './sections/Seguridad'
 import Roles from './sections/Roles'
 import Demo from './sections/Demo'
-import Gallery from './sections/Gallery'
 import Proceso from './sections/Proceso'
 import Tutoriales from './sections/Tutoriales'
 import FAQ from './sections/FAQ'
@@ -80,8 +79,7 @@ function LandingPage({ progressBarRef }) {
       <Modulos />
       <Integraciones />
       <Roles />
-      <Gallery />
-      <Caso />
+<Caso />
       <CTASection />
       <Seguridad />
       <Demo />

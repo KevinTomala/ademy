@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const CX = 310
 const CY = 250
@@ -21,6 +21,14 @@ function ellipsePath(cx, cy, rx, ry) {
 
 export default function HeroNetwork() {
   const sceneRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const handler = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     const el = sceneRef.current
@@ -45,7 +53,7 @@ export default function HeroNetwork() {
   return (
     <div className="hero-network" aria-hidden="true">
       <div className="hero-network__scene" ref={sceneRef}>
-        <svg viewBox="-110 100 840 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="hero-network__svg">
+        <svg viewBox={isMobile ? '50 110 520 300' : '-110 100 840 320'} fill="none" xmlns="http://www.w3.org/2000/svg" className="hero-network__svg">
           <defs>
             <radialGradient id="sun-glow" cx="50%" cy="50%" r="50%">
               <stop offset="0%"   stopColor="#5eead4" stopOpacity="0.45" />

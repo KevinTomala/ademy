@@ -115,9 +115,9 @@ export default function DemoPagos() {
     <div className="dp-wrap">
       {/* Métricas */}
       <div className="dp-metricas">
-        {metricas.map(m => (
-          <MetricaCard key={m.key} {...m} activa={filtroMetrica === m.key}
-            onClick={() => { setFiltroMetrica(m.key === filtroMetrica ? 'total' : m.key); setTab('cobros') }} />
+        {metricas.map(({ key, ...m }) => (
+          <MetricaCard key={key} {...m} activa={filtroMetrica === key}
+            onClick={() => { setFiltroMetrica(key === filtroMetrica ? 'total' : key); setTab('cobros') }} />
         ))}
       </div>
 

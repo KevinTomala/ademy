@@ -8,10 +8,10 @@ export default function Hero() {
       <div className="hero-text" data-reveal="left">
         <div className="hero-badge">
           <span className="hero-badge-dot"></span>
-          Hecho para academias en Ecuador
+          Hecho para centros de capacitación en Ecuador
         </div>
         <h1>
-          <span className="accent">Todo lo de tu academia,</span>{' '}en un solo lugar
+          <span className="accent">Gestión de tu centro,</span>{' '}en un solo lugar
         </h1>
         <p>
           Matrículas, cobros, diplomas y facturación electrónica al SRI. Todo conectado, todo trazable desde el primer contacto hasta el certificado final.

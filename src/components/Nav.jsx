@@ -3,9 +3,9 @@ import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 const NAV_LINKS = [
   ['#beneficios', 'Beneficios'],
+  ['#proceso', 'Proceso'],
   ['#modulos', 'Módulos'],
   ['#demo', 'Demo'],
-  ['#proceso', 'Proceso'],
   ['#tutoriales', 'Videos'],
   ['#contacto', 'Contacto'],
 ]
