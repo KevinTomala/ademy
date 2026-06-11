@@ -79,11 +79,7 @@ export default function Footer() {
             <ul className="footer-col-list">
               {links.map(([href, label]) => (
                 <li key={label}>
-                  {href.startsWith('/') ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
-                  ) : (
-                    <a href={href} onClick={(e) => handleLink(e, href)}>{label}</a>
-                  )}
+                  <a href={href} onClick={(e) => handleLink(e, href)}>{label}</a>
                 </li>
               ))}
             </ul>
