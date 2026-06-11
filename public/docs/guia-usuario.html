@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Usuario — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span><span class="sep">/</span>
+          <span>Manuales</span><span class="sep">/</span>
+          <span class="current">Guía de Usuario</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Manuales
+        </div>
+        <h1>Guía de Usuario</h1>
+        <p>Cómo operar el sistema Ademy: acceso, navegación, módulos principales y flujos de trabajo.</p>
+      </div>
+
+      <h2 id="acceso">Acceso al sistema</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Ir al sistema</h4>
+            <p>Ingresa a la URL del sistema proporcionada por el administrador desde cualquier navegador moderno (Chrome, Firefox, Edge).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Ingresar credenciales</h4>
+            <p>Escribe tu <strong>correo electrónico</strong> y <strong>contraseña</strong> asignados por el administrador. Haz clic en <em>Ingresar</em>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Dashboard</h4>
+            <p>Al iniciar sesión verás el dashboard con las métricas y accesos rápidos según tu rol. El menú lateral muestra solo los módulos a los que tienes acceso.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <strong>Sesión y seguridad</strong>
+        <p>La sesión dura 4 horas. Si el sistema te redirige al login sin que hayas cerrado sesión, la sesión expiró. Vuelve a ingresar. No compartas tu contraseña.</p>
+      </div>
+
+      <h2 id="flujo-matricula">Flujo: Matricular un estudiante</h2>
+
+      <div class="callout callout-tip">
+        <strong>Roles que realizan este flujo</strong>
+        <p>Secretaria o Administrador. El recepcionista solo crea el interesado; la matrícula la procesa la secretaria.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Registrar interesado</h4>
+            <p>En <strong>Operativo → Interesados</strong>, crear el prospecto con nombre, documento y contacto. Si ya existe por documento o email, se actualiza.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Crear estudiante</h4>
+            <p>Desde el perfil del interesado, convertirlo a estudiante completando datos de contacto, domicilio, salud y educación.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Seleccionar promoción</h4>
+            <p>En <strong>Académico → Matrículas → Nueva</strong>, seleccionar el curso y la promoción correspondiente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Aplicar descuentos</h4>
+            <p>Si aplica, ingresar el descuento de promoción (porcentaje) o descuento individual (monto fijo). El sistema calcula automáticamente el subtotal e IVA.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Registrar pago inicial</h4>
+            <p>Registrar el primer pago (al menos el monto mínimo de reserva) para activar la matrícula. La matrícula pasa a estado <em>parcial</em> o <em>pagado</em> según el monto.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="flujo-pago">Flujo: Registrar un pago</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Ir a Financiero → Pagos</h4>
+            <p>Buscar la matrícula del estudiante por nombre o código.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Nuevo pago</h4>
+            <p>Ingresar el monto, seleccionar el método (efectivo, transferencia, tarjeta, depósito) y la referencia externa si aplica.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Emitir comprobante</h4>
+            <p>Al guardar, el sistema genera el comprobante en PDF. Se puede descargar o reenviar por correo desde el detalle del pago.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>Pagos por transferencia</strong>
+        <p>Los pagos con método transferencia no se aplican al saldo automáticamente hasta ser <strong>confirmados</strong> por un administrador o cajero con el permiso <code>pagos.confirmar</code>.</p>
+      </div>
+
+      <h2 id="modulos">Módulos del sistema</h2>
+
+      <h3>Operativo</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sección</th><th>Función</th><th>Roles</th></tr></thead>
+          <tbody>
+            <tr><td>Interesados</td><td>Registrar y dar seguimiento a prospectos</td><td>Recepcionista, Secretaria, Admin</td></tr>
+            <tr><td>Bitácora</td><td>Registrar visitas e interacciones con prospectos</td><td>Recepcionista, Admin</td></tr>
+            <tr><td>Centros</td><td>Gestionar centros educativos</td><td>Administrador</td></tr>
+            <tr><td>Empresas</td><td>Empresas cliente u origen de inscritos</td><td>Administrador</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Académico</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sección</th><th>Función</th><th>Roles</th></tr></thead>
+          <tbody>
+            <tr><td>Estudiantes</td><td>Ficha completa del estudiante</td><td>Secretaria, Coordinador, Admin</td></tr>
+            <tr><td>Matrículas</td><td>Registro de matrícula y control de saldo</td><td>Secretaria, Admin</td></tr>
+            <tr><td>Promociones</td><td>Grupos de estudiantes por cohorte</td><td>Coordinador, Admin</td></tr>
+            <tr><td>Cursos</td><td>Catálogo de cursos activos</td><td>Coordinador, Admin</td></tr>
+            <tr><td>Diplomas</td><td>Emisión de diplomas al completar</td><td>Coordinador, Admin</td></tr>
+            <tr><td>Entregas</td><td>Kit de materiales entregados</td><td>Secretaria, Admin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Financiero</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sección</th><th>Función</th><th>Roles</th></tr></thead>
+          <tbody>
+            <tr><td>Pagos</td><td>Registrar y gestionar pagos de matrículas</td><td>Cajero, Admin</td></tr>
+            <tr><td>Bonificaciones</td><td>Crear y aplicar descuentos/bonificaciones</td><td>Admin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+
+      <h3>¿Cómo recupero mi contraseña?</h3>
+      <p>En la pantalla de login, haz clic en <em>¿Olvidaste tu contraseña?</em> e ingresa tu correo. Recibirás un enlace de recuperación. El enlace expira en 1 hora.</p>
+
+      <h3>¿Por qué no veo ciertos módulos en el menú?</h3>
+      <p>El menú es dinámico y muestra solo los módulos para los que tu rol tiene permisos. Si necesitas acceso a un módulo adicional, contacta al administrador del sistema.</p>
+
+      <h3>¿Puedo revertir un pago registrado por error?</h3>
+      <p>Sí, desde el detalle del pago hay una opción de <strong>Reverso</strong> disponible para usuarios con el permiso <code>pagos.reverso</code>. Se debe ingresar el motivo del reverso.</p>
+
+      <h3>¿Qué pasa si cierro el navegador sin hacer logout?</h3>
+      <p>La sesión expira automáticamente a las 4 horas. Si otra persona usa el mismo equipo, lo recomendable es siempre cerrar sesión desde el menú de usuario en la esquina superior derecha.</p>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

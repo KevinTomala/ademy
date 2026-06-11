@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Reference — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span><span class="sep">/</span>
+          <span>Técnico</span><span class="sep">/</span>
+          <span class="current">API Reference</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          API Reference
+        </div>
+        <h1>API Reference</h1>
+        <p>Documentación de todos los endpoints del backend Ademy. Base URL: <code>https://api.[tu-dominio]</code></p>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>Documento interno</strong>
+        <p>Esta referencia está dirigida al equipo de desarrollo y administradores del sistema. Los códigos de permisos mostrados son ilustrativos del patrón <code>modulo.accion</code> y no representan un vector de ataque por sí solos — requieren credenciales válidas para ser utilizados.</p>
+      </div>
+
+      <!-- Autenticación -->
+      <h2 id="auth">Autenticación</h2>
+      <p>Todos los endpoints protegidos requieren el header:</p>
+      <pre><code class="language-http">Authorization: Bearer &lt;token&gt;</code></pre>
+
+      <p>Los tokens tienen una expiración de <strong>4 horas</strong>. El frontend los almacena en <code>localStorage</code> y los invalida automáticamente ante una respuesta <code>401</code>.</p>
+
+      <h3>Códigos de respuesta</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Código</th><th>Significado</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-teal">200</span></td><td>Consulta / actualización exitosa</td></tr>
+            <tr><td><span class="badge badge-blue">201</span></td><td>Creación exitosa</td></tr>
+            <tr><td><span class="badge badge-yellow">400</span></td><td>Datos inválidos / falta de campos</td></tr>
+            <tr><td><span class="badge badge-yellow">401</span></td><td>Token ausente, inválido o expirado</td></tr>
+            <tr><td><span class="badge badge-yellow">403</span></td><td>Sin permiso para el recurso</td></tr>
+            <tr><td><span class="badge badge-yellow">404</span></td><td>Recurso no encontrado</td></tr>
+            <tr><td><span class="badge badge-red">500</span></td><td>Error interno del servidor</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ejemplo de uso</h3>
+      <pre><code class="language-bash"># 1. Login
+curl -X POST https://api.[tu-dominio]/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"usuario@ejemplo.com","password":"********"}'
+
+# 2. Llamada protegida
+curl https://api.[tu-dominio]/api/pagos \
+  -H "Authorization: Bearer &lt;TOKEN&gt;"</code></pre>
+
+      <!-- /auth -->
+      <h2 id="endpoint-auth">Endpoints de autenticación <code>/auth</code></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Auth</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/auth/login</code></td><td>No</td><td>Login de usuario</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/auth/logout</code></td><td>Sí</td><td>Cerrar sesión</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/auth/me</code></td><td>Sí</td><td>Obtener usuario actual</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/auth/register</code></td><td>No</td><td>Registro de usuario</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/auth/forgot-password</code></td><td>No</td><td>Solicitar recuperación de contraseña</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/auth/reset-password</code></td><td>No</td><td>Restablecer contraseña con token</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Seguridad -->
+      <h2 id="seguridad">Seguridad</h2>
+
+      <h3>Usuarios <code>/api/usuarios</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/usuarios</code></td><td><span class="perm">manage_users</span></td><td>Listar usuarios</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/usuarios</code></td><td><span class="perm">manage_users</span></td><td>Crear usuario</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/usuarios/:id</code></td><td><span class="perm">manage_users</span></td><td>Obtener usuario por ID</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/usuarios/:id</code></td><td><span class="perm">manage_users</span></td><td>Actualizar usuario</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/usuarios/:id/password</code></td><td><span class="perm">manage_users</span></td><td>Cambiar contraseña</td></tr>
+            <tr><td><span class="method method-delete">DELETE</span></td><td><code>/api/usuarios/:id</code></td><td><span class="perm">manage_users</span></td><td>Eliminar usuario (lógico)</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/usuarios/menu</code></td><td>—</td><td>Menú dinámico según rol</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Roles <code>/api/roles</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/roles</code></td><td><span class="perm">roles.gestion</span></td><td>Listar roles</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/roles</code></td><td><span class="perm">roles.gestion</span></td><td>Crear rol</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/roles/:id</code></td><td><span class="perm">roles.gestion</span></td><td>Obtener rol por ID</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/roles/:id</code></td><td><span class="perm">roles.gestion</span></td><td>Actualizar rol</td></tr>
+            <tr><td><span class="method method-delete">DELETE</span></td><td><code>/api/roles/:id</code></td><td><span class="perm">roles.gestion</span></td><td>Eliminar rol</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Permisos <code>/api/permisos</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/permisos</code></td><td><span class="perm">roles.gestion</span></td><td>Listar permisos</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/permisos</code></td><td><span class="perm">roles.gestion</span></td><td>Crear permiso</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/permisos/:id</code></td><td><span class="perm">roles.gestion</span></td><td>Actualizar permiso</td></tr>
+            <tr><td><span class="method method-delete">DELETE</span></td><td><code>/api/permisos/:id</code></td><td><span class="perm">roles.gestion</span></td><td>Eliminar permiso</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Operativo -->
+      <h2 id="operativo">Operativo</h2>
+
+      <h3>Centros educativos <code>/api/centros</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/centros</code></td><td><span class="perm">centros.listar</span></td><td>Listar centros</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/centros</code></td><td><span class="perm">centros.crear</span></td><td>Crear centro</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/centros/:id</code></td><td><span class="perm">centros.listar</span></td><td>Obtener centro</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/centros/:id</code></td><td><span class="perm">centros.editar</span></td><td>Actualizar centro</td></tr>
+            <tr><td><span class="method method-delete">DELETE</span></td><td><code>/api/centros/:id</code></td><td><span class="perm">centros.eliminar</span></td><td>Eliminar centro (lógico)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Interesados <code>/api/interesados</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/interesados</code></td><td><span class="perm">interesados.listar</span></td><td>Listar interesados</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/interesados</code></td><td><span class="perm">interesados.crear</span></td><td>Crear interesado</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/interesados/:id</code></td><td><span class="perm">interesados.listar</span></td><td>Obtener interesado</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/interesados/:id</code></td><td><span class="perm">interesados.editar</span></td><td>Actualizar interesado</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Académico -->
+      <h2 id="academico">Académico</h2>
+
+      <h3>Estudiantes <code>/api/estudiantes</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/estudiantes</code></td><td><span class="perm">estudiantes.listar</span></td><td>Listar estudiantes</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/estudiantes</code></td><td><span class="perm">estudiantes.crear</span></td><td>Crear estudiante</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/estudiantes/:id</code></td><td><span class="perm">estudiantes.listar</span></td><td>Obtener estudiante</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/estudiantes/:id</code></td><td><span class="perm">estudiantes.editar</span></td><td>Actualizar estudiante</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Matrículas <code>/api/matriculas</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/matriculas</code></td><td><span class="perm">matriculas.listar</span></td><td>Listar matrículas</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/matriculas</code></td><td><span class="perm">matriculas.crear</span></td><td>Crear matrícula</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/matriculas/:id</code></td><td><span class="perm">matriculas.listar</span></td><td>Obtener matrícula</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/matriculas/:id</code></td><td><span class="perm">matriculas.editar</span></td><td>Actualizar matrícula</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/matriculas/:id/anular</code></td><td><span class="perm">matriculas.anular</span></td><td>Anular matrícula</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Promociones <code>/api/promociones</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/promociones</code></td><td><span class="perm">promociones.listar</span></td><td>Listar promociones</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/promociones</code></td><td><span class="perm">promociones.crear</span></td><td>Crear promoción</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/promociones/:id</code></td><td><span class="perm">promociones.listar</span></td><td>Detalle de promoción</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/promociones/:id</code></td><td><span class="perm">promociones.editar</span></td><td>Actualizar promoción</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Cursos <code>/api/cursos</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/cursos</code></td><td>Listar cursos activos</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/cursos/:id</code></td><td>Detalle de curso</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/cursos/centro/:centro_id</code></td><td>Cursos por centro (<em>debe ir antes de <code>/:id</code></em>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Financiero -->
+      <h2 id="financiero">Financiero</h2>
+
+      <h3>Pagos <code>/api/pagos</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/pagos</code></td><td><span class="perm">pagos.listar</span></td><td>Listar pagos</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/pagos</code></td><td><span class="perm">pagos.crear</span></td><td>Registrar pago</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/pagos/:id</code></td><td><span class="perm">pagos.listar</span></td><td>Detalle de pago</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/pagos/:id/reverso</code></td><td><span class="perm">pagos.reverso</span></td><td>Reverso de pago</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/pagos/:id/comprobante</code></td><td><span class="perm">pagos.listar</span></td><td>Descargar comprobante PDF</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Bonificaciones <code>/api/bonificaciones</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Permiso</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/bonificaciones</code></td><td><span class="perm">bonificaciones.listar</span></td><td>Listar bonificaciones</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/bonificaciones</code></td><td><span class="perm">bonificaciones.crear</span></td><td>Crear bonificación</td></tr>
+            <tr><td><span class="method method-put">PUT</span></td><td><code>/api/bonificaciones/:id</code></td><td><span class="perm">bonificaciones.editar</span></td><td>Actualizar bonificación</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Soporte -->
+      <h2 id="soporte">Soporte y varios</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método</th><th>Endpoint</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/dashboard</code></td><td>Métricas del dashboard general</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/dashboard/security</code></td><td>Métricas del dashboard de seguridad</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/api/notificaciones</code></td><td>Notificaciones del usuario</td></tr>
+            <tr><td><span class="method method-post">POST</span></td><td><code>/api/logs</code></td><td>Registrar log del frontend</td></tr>
+            <tr><td><span class="method method-get">GET</span></td><td><code>/</code></td><td>Health check (<code>"API funcionando correctamente"</code>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>Nota sobre orden de rutas en Express</strong>
+        <p>Rutas específicas deben declararse <strong>antes</strong> que rutas genéricas tipo <code>/:id</code>. En particular: <code>GET /api/cursos/centro/:centro_id</code> y <code>GET /api/especialidades/nivel/:nivel_id</code> pueden ser interceptadas por <code>/:id</code> si no están en el orden correcto.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roles y Permisos — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span><span class="sep">/</span>
+          <span>Manuales</span><span class="sep">/</span>
+          <span class="current">Roles y Permisos</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Gobierno
+        </div>
+        <h1>Roles y Permisos</h1>
+        <p>Roles del sistema Ademy, accesos recomendados por módulo y codificación de permisos.</p>
+      </div>
+
+      <h2 id="roles">Roles del sistema</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rol</th><th>Descripción</th><th>Nivel de acceso</th></tr></thead>
+          <tbody>
+            <tr><td><strong>superadmin</strong></td><td>Control total del sistema incluyendo seguridad, roles y configuración</td><td><span class="badge badge-red">Total</span></td></tr>
+            <tr><td><strong>administrador</strong></td><td>Administración general: operativo, académico, financiero y usuarios</td><td><span class="badge badge-yellow">Alto</span></td></tr>
+            <tr><td><strong>coordinador</strong></td><td>Gestión académica completa: catálogo, formaciones, notas, diplomas</td><td><span class="badge badge-blue">Medio-alto</span></td></tr>
+            <tr><td><strong>secretaria</strong></td><td>Matrículas y fichas de estudiantes</td><td><span class="badge badge-teal">Medio</span></td></tr>
+            <tr><td><strong>recepcionista</strong></td><td>Registro de interesados y bitácora de visitas</td><td><span class="badge badge-gray">Bajo</span></td></tr>
+            <tr><td><strong>cajero</strong></td><td>Gestión de pagos y emisión de comprobantes</td><td><span class="badge badge-gray">Bajo</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info">
+        <strong>Usuario superadmin</strong>
+        <p>El usuario con el rol de mayor jerarquía bypasea todos los checks de permisos en el middleware. No requiere tener los permisos explícitamente asignados en la tabla de roles.</p>
+      </div>
+
+      <h2 id="accesos">Accesos recomendados por rol</h2>
+
+      <h3>superadmin</h3>
+      <p>Acceso irrestricto a todo el sistema, incluyendo gestión de roles, permisos y configuración de seguridad.</p>
+
+      <h3>administrador</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Módulo</th><th>Acceso</th></tr></thead>
+          <tbody>
+            <tr><td>Operativo</td><td>Centros, empresas, interesados, bitácora completa</td></tr>
+            <tr><td>Académico</td><td>Catálogo, convocatorias, promociones, estudiantes, matrículas</td></tr>
+            <tr><td>Financiero</td><td>Pagos y bonificaciones completo</td></tr>
+            <tr><td>Seguridad</td><td>Gestión de usuarios y roles</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>coordinador</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Módulo</th><th>Acceso</th></tr></thead>
+          <tbody>
+            <tr><td>Académico</td><td>Catálogo completo, promociones, formaciones, notas, diplomas, menciones, calendario</td></tr>
+            <tr><td>Operativo</td><td>Solo lectura de matrículas y estudiantes para seguimiento</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>secretaria</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Módulo</th><th>Acceso</th></tr></thead>
+          <tbody>
+            <tr><td>Estudiantes</td><td>Crear y editar</td></tr>
+            <tr><td>Matrículas</td><td>Crear, editar y consultar</td></tr>
+            <tr><td>Catálogo / Promociones</td><td>Solo lectura (para seleccionar al matricular)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>recepcionista</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Módulo</th><th>Acceso</th></tr></thead>
+          <tbody>
+            <tr><td>Interesados</td><td>Crear y editar</td></tr>
+            <tr><td>Bitácora</td><td>Registrar visitas y novedades</td></tr>
+            <tr><td>Centros / Empresas</td><td>Solo lectura (referencia)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>cajero</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Módulo</th><th>Acceso</th></tr></thead>
+          <tbody>
+            <tr><td>Pagos</td><td>Listar, detalle, registrar, emitir comprobante, reenviar</td></tr>
+            <tr><td>Bonificaciones</td><td>Listar y aplicar (si corresponde)</td></tr>
+            <tr><td>Matrículas</td><td>Solo lectura (para validar saldo y estado)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="codigos-permisos">Códigos de permisos</h2>
+      <p>Los permisos usan notación <code>modulo.accion</code>. Se asignan a roles y se verifican en el backend con <code>checkPermission('codigo')</code>.</p>
+
+      <h3>Seguridad</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Código</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="perm">manage_users</span></td><td>Gestión completa de usuarios</td></tr>
+            <tr><td><span class="perm">roles.gestion</span></td><td>Gestión de roles y permisos</td></tr>
+            <tr><td><span class="perm">dashboard.security</span></td><td>Ver dashboard de seguridad y auditoría</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Operativo</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Código</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="perm">centros.listar</span></td><td>Ver listado de centros</td></tr>
+            <tr><td><span class="perm">centros.crear</span></td><td>Crear centros</td></tr>
+            <tr><td><span class="perm">centros.editar</span></td><td>Editar centros</td></tr>
+            <tr><td><span class="perm">centros.eliminar</span></td><td>Eliminar centros (lógico)</td></tr>
+            <tr><td><span class="perm">interesados.listar</span></td><td>Ver listado de interesados</td></tr>
+            <tr><td><span class="perm">interesados.crear</span></td><td>Registrar interesados</td></tr>
+            <tr><td><span class="perm">interesados.editar</span></td><td>Editar interesados</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Académico</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Código</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="perm">estudiantes.listar</span></td><td>Ver listado de estudiantes</td></tr>
+            <tr><td><span class="perm">estudiantes.crear</span></td><td>Registrar estudiantes</td></tr>
+            <tr><td><span class="perm">estudiantes.editar</span></td><td>Editar datos de estudiante</td></tr>
+            <tr><td><span class="perm">matriculas.listar</span></td><td>Ver matrículas</td></tr>
+            <tr><td><span class="perm">matriculas.crear</span></td><td>Registrar matrículas</td></tr>
+            <tr><td><span class="perm">matriculas.editar</span></td><td>Editar matrículas</td></tr>
+            <tr><td><span class="perm">matriculas.anular</span></td><td>Anular matrículas</td></tr>
+            <tr><td><span class="perm">promociones.listar</span></td><td>Ver promociones</td></tr>
+            <tr><td><span class="perm">promociones.crear</span></td><td>Crear promociones</td></tr>
+            <tr><td><span class="perm">promociones.editar</span></td><td>Editar promociones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Financiero</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Código</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><span class="perm">pagos.listar</span></td><td>Ver listado de pagos</td></tr>
+            <tr><td><span class="perm">pagos.crear</span></td><td>Registrar pagos</td></tr>
+            <tr><td><span class="perm">pagos.reverso</span></td><td>Hacer reverso de pago</td></tr>
+            <tr><td><span class="perm">bonificaciones.listar</span></td><td>Ver bonificaciones</td></tr>
+            <tr><td><span class="perm">bonificaciones.crear</span></td><td>Crear bonificaciones</td></tr>
+            <tr><td><span class="perm">bonificaciones.editar</span></td><td>Editar bonificaciones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="implementacion">Implementación técnica</h2>
+      <p>En el backend, los permisos se verifican en el middleware de autenticación:</p>
+      <pre><code class="language-javascript">// Verificar un permiso específico
+router.get('/api/pagos', verifyToken, checkPermission('pagos.listar'), getPagos);
+
+// Verificar cualquiera de varios permisos (OR)
+router.get('/api/reportes', verifyToken, checkPermission(['reportes.ver', 'admin.total']), getReportes);</code></pre>
+
+      <p>Los menús del frontend también son dinámicos — se cargan desde la base de datos según los permisos del usuario autenticado via <code>GET /api/usuarios/menu</code>.</p>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

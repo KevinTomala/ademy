@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Despliegue — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span><span class="sep">/</span>
+          <span>Técnico</span><span class="sep">/</span>
+          <span class="current">Despliegue</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Técnico
+        </div>
+        <h1>Despliegue y Runbook</h1>
+        <p>Guía de instalación local con Docker y despliegue en producción (Render + Vercel + Cloudflare).</p>
+      </div>
+
+      <h2 id="arquitectura-prod">Arquitectura de producción</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Servicio</th><th>Plataforma</th><th>Dominio</th></tr></thead>
+          <tbody>
+            <tr><td>Frontend (React)</td><td>Vercel</td><td><code>app.[tu-dominio]</code></td></tr>
+            <tr><td>Backend (Express)</td><td>Render</td><td><code>api.[tu-dominio]</code></td></tr>
+            <tr><td>Base de datos</td><td>TiDB Cloud (MySQL)</td><td>—</td></tr>
+            <tr><td>Almacenamiento</td><td>Cloudflare R2</td><td>—</td></tr>
+            <tr><td>Correos</td><td>Mailgun</td><td>—</td></tr>
+            <tr><td>DNS / CDN</td><td>Cloudflare</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="local">Instalación local (Docker)</h2>
+
+      <h3>Prerrequisitos</h3>
+      <ul>
+        <li>Docker Desktop instalado y corriendo</li>
+        <li>Git</li>
+        <li>Node.js 20+ (para desarrollo sin Docker)</li>
+      </ul>
+
+      <h3>Pasos</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Clonar el repositorio</h4>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Crear archivos <code>.env</code></h4>
+            <p>Copiar <code>.env.example</code> a <code>.env</code> en la raíz del monorepo y ajustar las variables.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Levantar los servicios</h4>
+          </div>
+        </div>
+      </div>
+
+      <pre><code class="language-bash"># Levantar MySQL + Backend + Frontend
+docker compose up -d --build
+
+# Incluir phpMyAdmin en :8080 (opcional)
+docker compose --profile tools up -d
+
+# Ver logs
+docker compose logs -f backend
+docker compose logs -f frontend</code></pre>
+
+      <p>Servicios disponibles en local:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Servicio</th><th>URL</th></tr></thead>
+          <tbody>
+            <tr><td>Frontend</td><td><code>http://localhost:3001</code></td></tr>
+            <tr><td>Backend / API</td><td><code>http://localhost:3000</code></td></tr>
+            <tr><td>phpMyAdmin</td><td><code>http://localhost:8080</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="env-vars">Variables de entorno</h2>
+
+      <h3>Backend (<code>backend/.env</code>)</h3>
+      <pre><code class="language-bash"># Base de datos
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=tu_password
+DB_NAME=g_academico
+DB_SSL=false
+
+# JWT
+JWT_SECRET=tu_clave_secreta_muy_larga
+
+# CORS
+FRONTEND_URL=http://localhost:3001
+
+# Storage: "local" o "r2"
+STORAGE_DRIVER=local
+STORAGE_DIR=./storage
+
+# Cloudflare R2 (solo si STORAGE_DRIVER=r2)
+R2_ACCOUNT_ID=
+R2_ACCESS_KEY_ID=
+R2_SECRET_ACCESS_KEY=
+R2_BUCKET_NAME=
+R2_PUBLIC_URL=
+
+# Email (Mailgun)
+MAILGUN_API_KEY=
+MAILGUN_DOMAIN=
+
+# Modo de inicio: "blocking" | "nonblocking"
+SERVER_START_MODE=blocking</code></pre>
+
+      <h3>Frontend (<code>frontend/.env</code>)</h3>
+      <pre><code class="language-bash"># URL del backend (todas las vars deben iniciar con REACT_APP_)
+REACT_APP_API_URL=http://localhost:3000</code></pre>
+
+      <div class="callout callout-warn">
+        <strong>Variables en Vercel</strong>
+        <p>En Vercel las variables se configuran en <em>Settings → Environment Variables</em>. En producción: <code>REACT_APP_API_URL=https://api.[tu-dominio]</code></p>
+      </div>
+
+      <h2 id="produccion-frontend">Frontend en Vercel</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Application Preset</td><td>Create React App</td></tr>
+            <tr><td>Root Directory</td><td><code>frontend</code></td></tr>
+            <tr><td>Install Command</td><td><code>npm install</code></td></tr>
+            <tr><td>Build Command</td><td><code>npm run build</code></td></tr>
+            <tr><td>Output Directory</td><td><code>build</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>DNS en Cloudflare para el dominio personalizado:</p>
+      <pre><code class="language-text">Tipo    Nombre                  Valor
+CNAME   app.[tu-dominio]  →   [nombre-proyecto].vercel.app</code></pre>
+
+      <div class="callout callout-info">
+        <strong>Sin https:// en DNS</strong>
+        <p>En Cloudflare DNS no se agrega el prefijo <code>https://</code> en ningún campo. Solo el dominio desnudo.</p>
+      </div>
+
+      <h2 id="produccion-backend">Backend en Render</h2>
+      <p>El backend usa <code>SERVER_START_MODE=nonblocking</code> en Render para que el servicio responda mientras espera la conexión a la base de datos (Render puede tardar en levantar).</p>
+
+      <div class="callout callout-tip">
+        <strong>Tip: Cold starts en Render</strong>
+        <p>En el plan gratuito de Render el servicio se duerme tras 15 min de inactividad. El primer request puede tardar ~30s. Para producción real considera el plan Basic o superior.</p>
+      </div>
+
+      <h2 id="troubleshooting">Troubleshooting común</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Síntoma</th><th>Causa probable</th><th>Solución</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Frontend no conecta con backend</td>
+              <td><code>REACT_APP_API_URL</code> incorrecto</td>
+              <td>Verificar la variable y reconstruir el build</td>
+            </tr>
+            <tr>
+              <td>Error CORS en producción</td>
+              <td><code>FRONTEND_URL</code> no coincide</td>
+              <td>Actualizar <code>FRONTEND_URL</code> en Render con el dominio exacto</td>
+            </tr>
+            <tr>
+              <td>MySQL no inicia en Docker</td>
+              <td>Puerto 3306 ocupado localmente</td>
+              <td>Cambiar el puerto en <code>docker-compose.yml</code> o detener el MySQL local</td>
+            </tr>
+            <tr>
+              <td>Archivos no se suben</td>
+              <td>Directorio de storage no existe</td>
+              <td>Crear <code>backend/storage/</code> o configurar R2</td>
+            </tr>
+            <tr>
+              <td>JWT inválido inmediatamente</td>
+              <td><code>JWT_SECRET</code> diferente entre deploys</td>
+              <td>Usar el mismo secret en todos los entornos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

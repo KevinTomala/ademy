@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Migraciones — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span>
+          <span class="sep">/</span>
+          <span class="current">Guía de Migración</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" title="Cambiar tema"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Migraciones
+        </div>
+        <h1>Guía de Migración de Datos</h1>
+        <p>Estructura, patrones y buenas prácticas para los scripts de importación masiva de promociones al sistema Ademy.</p>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>Aviso de privacidad</strong>
+        <p>Los ejemplos de esta guía usan <strong>datos ficticios</strong>. Los scripts reales contienen datos sensibles de clientes y no deben ser compartidos públicamente. Acceder a los scripts de producción requiere permisos de administrador del sistema.</p>
+      </div>
+
+      <h2 id="introduccion">¿Qué es un script de migración?</h2>
+      <p>
+        Los scripts de migración (<code>import_XXXX_NX.sql</code>) permiten importar masivamente una promoción completa a la base de datos, incluyendo interesados, estudiantes, matrículas, pagos, entregas y formaciones.
+      </p>
+      <p>
+        Se usan cuando se registran en el sistema grupos de estudiantes que ya cursaron o empezaron antes de que el sistema estuviera activo, o cuando hay un proceso de migración desde hojas de cálculo.
+      </p>
+
+      <h2 id="nomenclatura">Nomenclatura de archivos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Parte</th><th>Ejemplo</th><th>Descripción</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>import_</code></td><td>—</td><td>Prefijo fijo que indica script de importación</td></tr>
+            <tr><td><code>XXXX</code></td><td><code>0261</code></td><td>Número de promoción (4 dígitos con cero a la izquierda)</td></tr>
+            <tr><td><code>_NX</code></td><td><code>N1</code>, <code>N2</code></td><td>Nivel del curso (N1 = Nivel 1, N2 = Nivel 2, etc.)</td></tr>
+            <tr><td><code>_parche</code></td><td><code>_parche2</code></td><td>Corrección posterior al script principal</td></tr>
+            <tr><td><code>_continuacion</code></td><td>—</td><td>Script que completa un anterior interrumpido</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Ejemplos válidos</h4>
+      <pre><code class="language-text">import_0261_N1.sql              → Promoción 0261, Nivel 1 (principal)
+import_0262_N1.sql              → Promoción 0262, Nivel 1
+import_0262_N1_parche.sql       → Corrección al script principal 0262-N1
+import_0262_N1_parche2.sql      → Segunda corrección al script 0262-N1
+import_0270_N1_continuacion.sql → Continuación de importación parcial 0270-N1</code></pre>
+
+      <h2 id="estructura">Estructura del script</h2>
+      <p>Cada script sigue la misma estructura en bloques ordenados:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Encabezado del script</h4>
+            <p>Comentario con metadatos: número de promoción, nivel, ciclo, fechas, estado y secuencias de referencia para las claves externas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configuración inicial</h4>
+            <p>Selección de base de datos, charset y resolución del <code>promo_id</code> mediante <code>SELECT</code> (no se hardcodea el ID).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Referentes (opcional)</h4>
+            <p>Si hay estudiantes que refirieron a otros en la promoción, se registran aquí sus bonificaciones/comisiones.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Bloque por estudiante</h4>
+            <p>Cada estudiante tiene su propio bloque comentado. Contiene en orden: interesado → bitácora → estudiante → contacto → domicilio → salud → logística → educación → matrícula → formación → pagos → entregas.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="ejemplo">Ejemplo anonimizado</h2>
+      <p>A continuación se muestra la estructura completa con datos ficticios para ilustrar el patrón:</p>
+
+      <pre><code class="language-sql">-- ============================================================
+-- SCRIPT DE IMPORTACION: PROMOCION XXXX - N1
+-- Hoja: XXXX-N1 | Promocion id=? | Ciclo EJEMPLO (id=?)
+-- Fecha: YYYY-MM-DD al YYYY-MM-DD | Estado: finalizado
+-- Secuencias desde: EFECXXX, TRANXXX, DEPOXXX, TARJX, BONOX
+-- ============================================================
+
+USE g_academico;
+SET NAMES utf8mb4;
+
+-- Resolucion dinamica del ID de promocion (no se hardcodea)
+SET @promo_id = (
+  SELECT id FROM promociones
+  WHERE numero_promocion = 'XXXX' AND curso_id = 1
+  LIMIT 1
+);
+
+-- ============================================================
+-- REFERENTES (estudiantes que refirieron en esta promocion)
+-- ============================================================
+-- Ejemplo: cuando un estudiante activo refiere a un nuevo inscrito
+-- se registra una bonificacion a su favor.
+-- Si no hay referidos activos en la promo, se deja comentado.
+
+-- SET @referente_id = (SELECT id FROM estudiantes WHERE documento_identidad = '0900000001' LIMIT 1);
+-- INSERT INTO bonificaciones (estudiante_id, monto, tipo, estado, promocion_id, ...)
+-- VALUES (@referente_id, 25.00, 'referido', 'activa', @promo_id, ...);
+
+-- ============================================================
+-- INTERESADOS, ESTUDIANTES, MATRICULAS, PAGOS Y ENTREGAS
+-- ============================================================
+
+-- ------ 1: APELLIDO NOMBRE EJEMPLO ------
+-- Contexto: estudiante sin referido, descuento por evento especial
+-- Precio lista $287.50, descuento 20% => total $230, saldo $0
+
+-- 1.1 Registrar interesado (lead)
+INSERT INTO interesados (
+  nombres, apellidos, documento, telefono, email,
+  fuente_origen_id, referido_por_id, estado_interes, created_at
+) VALUES (
+  'NOMBRE', 'APELLIDO EJEMPLO', '0900000001', '0999000001',
+  'ejemplo.estudiante@correo.com', NULL, NULL, 'matriculado', 'YYYY-MM-DD 00:00:00'
+);
+SET @interesado_id = LAST_INSERT_ID();
+
+-- 1.2 Registrar visita en bitácora
+INSERT INTO bitacora_visitas (
+  interesado_id, fecha_visita, observacion,
+  convertido_a_prematricula, transferido
+) VALUES (
+  @interesado_id, 'YYYY-MM-DD 00:00:00', NULL, 1, 1
+);
+SET @bitacora_id = LAST_INSERT_ID();
+
+-- 1.3 Asociar novedad a la visita (tipo de inscripción)
+INSERT INTO bitacora_novedades (bitacora_id, novedad_id)
+VALUES (
+  @bitacora_id,
+  (SELECT id FROM novedades
+   WHERE categoria='nivel' AND subcategoria='Nivel 1'
+   AND tipo_accion='inscripcion' LIMIT 1)
+);
+
+-- 1.4 Crear registro de estudiante
+INSERT INTO estudiantes (
+  centro_id, interesado_id, referente_id,
+  nombres, apellidos, documento_identidad,
+  nacionalidad, sexo, estado_academico
+) VALUES (
+  1, @interesado_id, NULL,
+  'NOMBRE', 'APELLIDO EJEMPLO', '0900000001',
+  'ECUATORIANA', 'F', 'matriculado'
+);
+SET @estudiante_id = LAST_INSERT_ID();
+
+-- 1.5 Contacto del estudiante
+INSERT INTO estudiantes_contacto (
+  estudiante_id, email, telefono_celular,
+  contacto_emergencia_nombre, contacto_emergencia_telefono
+) VALUES (
+  @estudiante_id, 'ejemplo.estudiante@correo.com',
+  '0999000001', 'CONTACTO EMERGENCIA', '0999000002'
+);
+
+-- 1.6 Domicilio
+INSERT INTO estudiantes_domicilio (
+  estudiante_id, pais, provincia, canton, parroquia, direccion, codigo_postal
+) VALUES (
+  @estudiante_id, 'ECUADOR', 'GUAYAS', 'GUAYAQUIL',
+  'Guayaquil', 'DIRECCION EJEMPLO SN', '90001'
+);
+
+-- 1.7 Datos de salud
+INSERT INTO estudiantes_salud (
+  estudiante_id, tipo_sangre, estatura, tatuaje
+) VALUES (
+  @estudiante_id, 'O+', 1.65, 'no'
+);
+
+-- 1.8 Logística / disponibilidad
+INSERT INTO estudiantes_logistica (
+  estudiante_id, movilizacion, tipo_vehiculo, licencia,
+  disp_viajar, disp_turnos, disp_fines_semana
+) VALUES (
+  @estudiante_id, 0, NULL, NULL, 1, 1, 1
+);
+
+-- 1.9 Educación general
+INSERT INTO estudiantes_educacion_general (
+  estudiante_id, nivel_estudio, institucion, titulo_obtenido
+) VALUES (
+  @estudiante_id, 'Bachillerato', 'INSTITUCION EDUCATIVA EJEMPLO', 'Bachiller'
+);
+
+-- 1.10 Matrícula
+-- precio_lista $287.50 | desc_promo 20% ($57.50) | subtotal $230 | IVA $0 | total $230 | saldo $0
+INSERT INTO matriculas (
+  estudiante_id, promocion_id, curso_id,
+  secuencial_curso, codigo_matricula, fecha_matricula,
+  precio_lista, desc_promocion_porcentaje, desc_promocion_monto,
+  descuento_individual, descuento_individual_monto,
+  subtotal, impuestos, total_a_pagar, saldo,
+  moneda, estado_pago, estado_matricula, observaciones
+) VALUES (
+  @estudiante_id, @promo_id, 1,
+  9001, 'N1-09001', 'YYYY-MM-DD 00:00:00',
+  287.50, 20.00, 57.50,
+  0.0, 0.0,
+  230.0, 0.0, 230.0, 0.0,
+  'USD', 'pagado', 'activa',
+  'Descuento 20% evento especial.'
+);
+SET @matricula_id = LAST_INSERT_ID();
+
+-- 1.11 Formación académica
+INSERT INTO estudiantes_formaciones (
+  estudiante_id, matricula_id, nivel_id, curso_id,
+  estado, fecha_inicio, fecha_fin
+) VALUES (
+  @estudiante_id, @matricula_id, 1, 1,
+  'cursando', 'YYYY-MM-DD', 'YYYY-MM-DD'
+);
+SET @formacion_id = LAST_INSERT_ID();
+UPDATE estudiantes_formaciones
+  SET formacion_origen_id = @formacion_id
+  WHERE id = @formacion_id;
+
+-- 1.12 Pagos (parcialidades)
+-- Pago 1: $100 por transferencia
+INSERT INTO pagos (
+  matricula_id, monto, saldo_pendiente, moneda,
+  tipo_movimiento, metodo_id, concepto_id,
+  estado, fecha_pago, referencia_externa
+) VALUES (
+  @matricula_id, 100.0, 130.0, 'USD',
+  'ingreso', 2, 1,
+  'registrado', 'YYYY-MM-DD 00:00:00', 'TRAN0000001'
+);
+-- Pago 2: $80 por transferencia
+INSERT INTO pagos (
+  matricula_id, monto, saldo_pendiente, moneda,
+  tipo_movimiento, metodo_id, concepto_id,
+  estado, fecha_pago, referencia_externa
+) VALUES (
+  @matricula_id, 80.0, 50.0, 'USD',
+  'ingreso', 2, 1,
+  'registrado', 'YYYY-MM-DD 00:00:00', 'TRAN0000002'
+);
+-- Pago 3: $50 efectivo (saldo 0)
+INSERT INTO pagos (
+  matricula_id, monto, saldo_pendiente, moneda,
+  tipo_movimiento, metodo_id, concepto_id,
+  estado, fecha_pago, referencia_externa
+) VALUES (
+  @matricula_id, 50.0, 0.0, 'USD',
+  'ingreso', 1, 1,
+  'registrado', 'YYYY-MM-DD 00:00:00', 'EFEC0000001'
+);
+
+-- 1.13 Entregas de kit
+INSERT INTO entregas (
+  matricula_id, entregable_id, cantidad, talla, estado, fecha_entrega
+) VALUES (
+  @matricula_id,
+  (SELECT id FROM catalogo_entregables WHERE nombre='Camisa' LIMIT 1),
+  1, 'M', 'entregado', 'YYYY-MM-DD 00:00:00'
+);
+INSERT INTO entregas (
+  matricula_id, entregable_id, cantidad, estado, fecha_entrega
+) VALUES (
+  @matricula_id,
+  (SELECT id FROM catalogo_entregables WHERE nombre='Guía de estudio' LIMIT 1),
+  1, 'entregado', 'YYYY-MM-DD 00:00:00'
+);
+INSERT INTO entregas (
+  matricula_id, entregable_id, cantidad, estado, fecha_entrega
+) VALUES (
+  @matricula_id,
+  (SELECT id FROM catalogo_entregables WHERE nombre='Mochila' LIMIT 1),
+  1, 'entregado', 'YYYY-MM-DD 00:00:00'
+);</code></pre>
+
+      <h2 id="variables-sesion">Variables de sesión</h2>
+      <p>El script usa variables de usuario MySQL (<code>@variable</code>) para encadenar IDs entre INSERTs sin hardcodear valores. Esto hace los scripts portables entre entornos (local, staging, producción).</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Variable</th><th>Qué almacena</th><th>Cómo se obtiene</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>@promo_id</code></td><td>ID de la promoción</td><td><code>SELECT</code> por <code>numero_promocion</code> + <code>curso_id</code></td></tr>
+            <tr><td><code>@interesado_id</code></td><td>ID del interesado recién insertado</td><td><code>LAST_INSERT_ID()</code></td></tr>
+            <tr><td><code>@bitacora_id</code></td><td>ID de la visita en bitácora</td><td><code>LAST_INSERT_ID()</code></td></tr>
+            <tr><td><code>@estudiante_id</code></td><td>ID del estudiante recién insertado</td><td><code>LAST_INSERT_ID()</code></td></tr>
+            <tr><td><code>@matricula_id</code></td><td>ID de la matrícula recién insertada</td><td><code>LAST_INSERT_ID()</code></td></tr>
+            <tr><td><code>@formacion_id</code></td><td>ID de la formación recién insertada</td><td><code>LAST_INSERT_ID()</code></td></tr>
+            <tr><td><code>@referente_id</code></td><td>ID de estudiante referente (si aplica)</td><td><code>SELECT</code> por <code>documento_identidad</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="metodos-pago">Métodos de pago (<code>metodo_id</code>)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>metodo_id</th><th>Tipo</th><th>Prefijo referencia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>1</code></td><td>Efectivo</td><td><code>EFECxxxxxx</code></td></tr>
+            <tr><td><code>2</code></td><td>Transferencia bancaria</td><td><code>TRANxxxxxx</code></td></tr>
+            <tr><td><code>3</code></td><td>Depósito bancario</td><td><code>DEPOxxxxxx</code></td></tr>
+            <tr><td><code>4</code></td><td>Tarjeta de crédito/débito</td><td><code>TARJxxxxxx</code></td></tr>
+            <tr><td><code>5</code></td><td>Bonificación</td><td><code>BONOxxxxxx</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info">
+        <strong>Truco: Secuencias en el encabezado</strong>
+        <p>El encabezado del script declara desde qué número continúan las secuencias de referencia externas (ej: <code>EFEC330</code>). Esto permite rastrear el correlativo sin consultar la base de datos y evitar colisiones con scripts anteriores.</p>
+      </div>
+
+      <h2 id="casos-especiales">Casos especiales</h2>
+
+      <h3>Estudiante con referido</h3>
+      <p>Si el estudiante viene referido por otro estudiante activo, se agrega el <code>referente_id</code> en el INSERT de <code>estudiantes</code> y se registra una bonificación al referente:</p>
+      <pre><code class="language-sql">-- Obtener el ID del estudiante referente
+SET @referente_id = (
+  SELECT id FROM estudiantes
+  WHERE documento_identidad = '0900000099' LIMIT 1
+);
+
+-- Registrar el estudiante con referente
+INSERT INTO estudiantes (
+  centro_id, interesado_id, referente_id, ...
+) VALUES (1, @interesado_id, @referente_id, ...);</code></pre>
+
+      <h3>Matrícula con descuento individual</h3>
+      <p>Cuando hay un descuento adicional al descuento de promoción (negociado individualmente):</p>
+      <pre><code class="language-sql">-- precio_lista $287.50 | desc_promo 10% | desc_individual $20
+-- subtotal = 287.50 - 28.75 - 20 = 238.75
+INSERT INTO matriculas (
+  ...,
+  precio_lista,         -- 287.50
+  desc_promocion_porcentaje, -- 10.00
+  desc_promocion_monto, -- 28.75
+  descuento_individual, -- 0.0  (porcentaje, si aplica)
+  descuento_individual_monto, -- 20.00
+  subtotal,             -- 238.75
+  impuestos,            -- 0.0
+  total_a_pagar,        -- 238.75
+  saldo,                -- saldo pendiente
+  ...
+) VALUES (...);</code></pre>
+
+      <h3>Matrícula con bonificación</h3>
+      <pre><code class="language-sql">-- La bonificacion se registra en tabla bonificaciones y afecta el saldo
+INSERT INTO bonificaciones (
+  matricula_id, monto, tipo, estado, fecha_inicio, fecha_fin, descripcion
+) VALUES (
+  @matricula_id, 30.00, 'descuento_especial', 'aplicada',
+  'YYYY-MM-DD', 'YYYY-MM-DD', 'Bono lanzamiento'
+);</code></pre>
+
+      <h3>Estudiante sin entrega de kit</h3>
+      <p>Si el kit no fue entregado en la misma fecha (ej: talla pendiente), el <code>estado</code> va como <code>'pendiente'</code> y la <code>fecha_entrega</code> queda en <code>NULL</code>:</p>
+      <pre><code class="language-sql">INSERT INTO entregas (
+  matricula_id, entregable_id, cantidad, talla, estado, fecha_entrega
+) VALUES (
+  @matricula_id,
+  (SELECT id FROM catalogo_entregables WHERE nombre='Camisa' LIMIT 1),
+  1, NULL, 'pendiente', NULL
+);</code></pre>
+
+      <h3>Script de parche</h3>
+      <p>Un <code>_parche.sql</code> corrige errores específicos del script principal. Siempre debe identificar el registro por clave única (no por secuencial):</p>
+      <pre><code class="language-sql">-- PARCHE: corregir talla de camisa para documento 0900000001
+UPDATE entregas e
+JOIN matriculas m ON e.matricula_id = m.id
+JOIN estudiantes est ON m.estudiante_id = est.id
+SET e.talla = 'L'
+WHERE est.documento_identidad = '0900000001'
+  AND e.entregable_id = (
+    SELECT id FROM catalogo_entregables WHERE nombre='Camisa' LIMIT 1
+  );</code></pre>
+
+      <h2 id="verificacion-previa">Consultas de verificación previa</h2>
+      <p>Antes de construir o ejecutar un script de importación, se recomienda correr estas consultas de diagnóstico para evitar duplicados, colisiones de secuencias y errores de integridad.</p>
+
+      <div class="callout callout-warn">
+        <strong>Solo para uso interno</strong>
+        <p>Estas consultas contienen lógica sobre la estructura interna de la base de datos. Reemplaza <code>{NUMERO}</code> con el número de promoción real y los documentos del bloque <code>IN (...)</code> con los de la hoja de trabajo correspondiente. <strong>No publicar con datos reales de estudiantes.</strong></p>
+      </div>
+
+      <h3>A. Estado actual de la promoción</h3>
+      <p>Verifica que la promoción existe y su estado antes de importar.</p>
+      <pre><code class="language-sql">-- A. Estado actual de la promoción (si ya existe en BD)
+SELECT id, numero_promocion, codigo_convocatoria,
+       fecha_inicio, fecha_fin, estado
+FROM promociones
+WHERE numero_promocion = '{NUMERO}';</code></pre>
+
+      <h3>B. Últimas secuencias de referencia externa</h3>
+      <p>Obtiene los últimos valores de referencia por método de pago para continuar la numeración sin colisiones.</p>
+      <pre><code class="language-sql">-- B. Últimas referencias externas por tipo de pago
+-- Resultado esperado (ejemplo):
+-- EFEC0000527 | TRAN0000308 | TARJ0000011 | DEPO0000074 | BONO0000004
+
+SELECT
+  MAX(CASE WHEN referencia_externa LIKE 'EFEC%' THEN referencia_externa END) AS ultimo_efec,
+  MAX(CASE WHEN referencia_externa LIKE 'TRAN%' THEN referencia_externa END) AS ultimo_tran,
+  MAX(CASE WHEN referencia_externa LIKE 'TARJ%' THEN referencia_externa END) AS ultimo_tarj,
+  MAX(CASE WHEN referencia_externa LIKE 'DEPO%' THEN referencia_externa END) AS ultimo_depo,
+  MAX(CASE WHEN referencia_externa LIKE 'BONO%' THEN referencia_externa END) AS ultimo_bono
+FROM pagos;</code></pre>
+
+      <div class="callout callout-info">
+        <strong>¿Por qué importa este paso?</strong>
+        <p>El encabezado de cada script declara desde qué número continúan las secuencias (ej: <code>EFEC330</code>). Si otro script se ejecutó antes, los números habrán avanzado. Esta consulta confirma el valor real en BD antes de escribir el script.</p>
+      </div>
+
+      <h3>C. Estudiantes ya ingresados en la promoción</h3>
+      <p>Lista los estudiantes que ya tienen matrícula en esa promoción (para no duplicarlos).</p>
+      <pre><code class="language-sql">-- C. Estudiantes ya registrados en la promoción {NUMERO}
+SELECT e.documento_identidad,
+       CONCAT(e.apellidos, ' ', e.nombres) AS nombre
+FROM matriculas m
+JOIN estudiantes e ON e.id = m.estudiante_id
+WHERE m.promocion_id = (
+  SELECT id FROM promociones
+  WHERE numero_promocion = '{NUMERO}' LIMIT 1
+);</code></pre>
+
+      <h3>D. Verificar existencia previa de estudiantes de la hoja</h3>
+      <p>Antes de insertar, identifica cuáles documentos de la hoja de trabajo ya existen como estudiantes en el sistema (pueden ser reprobados que reingresan o estudiantes de otras promociones).</p>
+      <pre><code class="language-sql">-- D. Verificar cuáles documentos ya existen como estudiantes
+-- Reemplazar la lista IN (...) con los documentos de la hoja de trabajo
+SELECT documento_identidad, id,
+       CONCAT(apellidos, ' ', nombres) AS nombre
+FROM estudiantes
+WHERE documento_identidad IN (
+  '0900000001', '0900000002', '0900000003', '0900000004',
+  '0900000005', '0900000006', '0900000007', '0900000008',
+  '0900000009', '0900000010', '0900000011', '0900000012'
+  -- ... agregar todos los documentos de la hoja
+);</code></pre>
+
+      <h3>E. Verificar matrículas previas de los estudiantes existentes</h3>
+      <p>Para los que ya existen, verifica si tienen matrícula previa (reprobaron un nivel anterior, se cambiaron de promoción, etc.).</p>
+      <pre><code class="language-sql">-- E. Matrículas previas de estudiantes que ya existen en BD
+SELECT e.documento_identidad,
+       CONCAT(e.apellidos, ' ', e.nombres) AS nombre,
+       m.codigo_matricula, m.estado_matricula,
+       p.numero_promocion
+FROM matriculas m
+JOIN estudiantes e  ON e.id  = m.estudiante_id
+JOIN promociones p  ON p.id  = m.promocion_id
+WHERE e.documento_identidad IN (
+  '0900000001', '0900000002', '0900000003', '0900000004',
+  '0900000005', '0900000006', '0900000007', '0900000008'
+  -- ... agregar los documentos que el paso D indicó como existentes
+)
+ORDER BY e.documento_identidad, m.fecha_matricula;</code></pre>
+
+      <div class="callout callout-tip">
+        <strong>Interpretación del resultado de E</strong>
+        <p>Si un estudiante aparece con <code>estado_matricula = 'activa'</code> en otra promoción del mismo nivel, es un caso especial (cambio de grupo o reingreso). En ese caso <strong>no</strong> se usa el bloque completo de INSERT de estudiante — solo se insertan la matrícula nueva y sus pagos referenciando el <code>@estudiante_id</code> ya existente.</p>
+      </div>
+
+      <h2 id="checklist">Checklist antes de ejecutar</h2>
+      <div class="callout callout-tip">
+        <strong>Buena práctica</strong>
+        <p>Siempre ejecuta el script en un entorno de prueba antes de correrlo en producción. Verifica que la promoción existe y que las secuencias no colisionan con registros anteriores.</p>
+      </div>
+
+      <ul>
+        <li>Correr consultas de verificación A–E y revisar resultados</li>
+        <li>Verificar que la promoción (<code>numero_promocion</code>) existe en la tabla <code>promociones</code></li>
+        <li>Confirmar que el <code>curso_id</code> es correcto para el nivel a importar</li>
+        <li>Revisar que las secuencias del encabezado continúan desde el último valor en BD (resultado B)</li>
+        <li>Identificar estudiantes que ya existen (resultado D) y ajustar sus bloques en el script</li>
+        <li>Ejecutar en transacción: <code>START TRANSACTION;</code> y verificar antes de <code>COMMIT;</code></li>
+        <li>Corroborar conteo de estudiantes insertados vs. total esperado</li>
+        <li>Validar que los saldos finales de matrículas son correctos</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

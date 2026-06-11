@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reglas de Negocio — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span><span class="sep">/</span>
+          <span>Manuales</span><span class="sep">/</span>
+          <span class="current">Reglas de Negocio</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+          Gobierno
+        </div>
+        <h1>Reglas de Negocio</h1>
+        <p>Comportamiento esperado del sistema: IVA, matrículas, pagos, bonificaciones y validaciones. Si una regla cambia, actualizar aquí e impactar UI / API / BD.</p>
+      </div>
+
+      <h2 id="iva">IVA</h2>
+      <ul>
+        <li>El IVA se calcula <strong>después</strong> de aplicar todos los descuentos sobre la base imponible neta.</li>
+        <li>Solo aplica a ítems gravados; ítems exentos tienen IVA = 0.</li>
+        <li>La base imponible no puede ser negativa; mínimo es 0.</li>
+        <li>IVA y base imponible se redondean a 2 decimales por transacción.</li>
+        <li>Cambios en descuentos o bonificaciones recalculan el IVA automáticamente.</li>
+      </ul>
+
+      <h2 id="matricula">Estados de matrícula</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Estado</th><th>Condición</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-yellow">pendiente</span></td><td>Pagos acumulados &lt; <code>monto_min_reserva</code></td></tr>
+            <tr><td><span class="badge badge-blue">parcial</span></td><td>Pagos acumulados &ge; <code>monto_min_reserva</code> y &lt; <code>monto_matricula</code></td></tr>
+            <tr><td><span class="badge badge-teal">pagado</span></td><td>Pagos acumulados &ge; <code>monto_matricula</code></td></tr>
+            <tr><td><span class="badge badge-red">anulado</span></td><td>Reverso total o anulación manual</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>La reserva solo es válida si el pago inicial &ge; <code>monto_min_reserva</code>.</li>
+      </ul>
+
+      <h2 id="pagos">Pagos</h2>
+      <ul>
+        <li>Se permiten pagos parciales; cada pago debe ser &gt; 0 y &le; saldo pendiente.</li>
+        <li>Pagos por transferencia <strong>no se imputan</strong> hasta confirmación.</li>
+        <li>No se permiten pagos sobre matrículas en estado <code>anulado</code>.</li>
+        <li>Todo reverso debe referenciar el pago original, con motivo y usuario responsable.</li>
+        <li><strong>Saldo pendiente</strong> = total_matricula − pagos_confirmados − descuentos/bonificaciones.</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <strong>Reverso de pagos</strong>
+        <p>Un reverso no elimina el pago original; crea un movimiento de tipo <code>egreso</code> que referencia al pago original. Nunca se borra físicamente un registro de pago.</p>
+      </div>
+
+      <h2 id="bonificaciones">Bonificaciones</h2>
+      <ul>
+        <li>Bonificaciones y descuentos no son acumulables entre sí; se aplica el mayor.</li>
+        <li>Una bonificación solo aplica a matrículas en estado <code>pendiente</code> o <code>parcial</code>.</li>
+        <li>Requiere vigencia definida (<code>fecha_inicio</code> y <code>fecha_fin</code>); fuera del rango no aplica.</li>
+        <li>Pasa a estado <code>no_pagada</code> si vence el plazo sin que se complete el pago.</li>
+        <li>Se anula si la matrícula o el curso/promoción se anulan.</li>
+        <li>Un job automático corre diariamente para anular bonificaciones vencidas.</li>
+      </ul>
+
+      <h2 id="interesados">Interesados y Bitácora</h2>
+      <ul>
+        <li>No se duplican interesados por documento o email; se actualiza el existente.</li>
+        <li>Cada visita en bitácora requiere recepcionista asignado, o motivo si es <code>NULL</code>.</li>
+        <li><code>convertido_a_prematricula = 1</code> solo si existe matrícula asociada en estado pendiente o parcial.</li>
+        <li><code>fecha_fin_visita</code> debe ser &ge; <code>fecha_visita</code> cuando se registra.</li>
+        <li>La bitácora se elimina de forma lógica (<code>deleted_at</code>), nunca física.</li>
+      </ul>
+
+      <h2 id="usuarios">Usuarios y roles</h2>
+      <ul>
+        <li>El email es obligatorio y único por usuario.</li>
+        <li>El username es opcional; si existe, debe ser único.</li>
+        <li>Usuarios inactivos o bloqueados no pueden iniciar sesión.</li>
+        <li>Un usuario sin rol no tiene permisos de módulo hasta que se le asigne uno.</li>
+        <li>Cambiar el rol de un usuario invalida sus sesiones activas.</li>
+      </ul>
+
+      <h2 id="centros">Centros educativos</h2>
+      <ul>
+        <li>El RUC es obligatorio y único por centro.</li>
+        <li>El nombre es obligatorio; el alias es opcional.</li>
+        <li>No se puede desactivar el <strong>último</strong> centro activo.</li>
+        <li>La eliminación es lógica; no se puede eliminar un centro con cursos, estudiantes o convocatorias activas.</li>
+        <li>Solo centros activos pueden recibir nuevos cursos o convocatorias.</li>
+      </ul>
+
+      <h2 id="catalogo">Catálogo académico</h2>
+      <ul>
+        <li>Solo cursos activos (sin <code>deleted_at</code>) aparecen en el catálogo de inscripción.</li>
+        <li>Un curso debe tener al menos un nivel y una especialidad asignados.</li>
+        <li>No se puede eliminar un curso con promociones o matrículas activas.</li>
+      </ul>
+
+      <h2 id="empresas">Empresas</h2>
+      <ul>
+        <li>Si se registra RUC, debe ser único.</li>
+        <li>Se requiere al menos un contacto: email o teléfono.</li>
+        <li>Solo empresas activas pueden asociarse como <code>empresa_origen</code> de un interesado.</li>
+        <li>Inactivar una empresa no borra el historial de interesados o experiencias asociadas.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

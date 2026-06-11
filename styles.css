@@ -208,6 +208,20 @@ a {
   display: none;
 }
 
+.nav-docs-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--brand);
+  border: 1px solid rgba(12, 134, 121, 0.35);
+  border-radius: 999px;
+  padding: 4px 12px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.nav-docs-link:hover {
+  background: rgba(12, 134, 121, 0.08);
+}
+
 .nav-links a {
   position: relative;
   padding: 7px 12px;

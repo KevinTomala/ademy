@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquitectura — Ademy Docs</title>
+  <link rel="icon" href="assets/images/AD2.png">
+  <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-container"></div>
+
+  <div class="main">
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-breadcrumb">
+          <span>Ademy Docs</span><span class="sep">/</span>
+          <span>Técnico</span><span class="sep">/</span>
+          <span class="current">Arquitectura</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle"></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-title">
+        <div class="page-badge">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M5 9v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M12 14v1"/></svg>
+          Técnico
+        </div>
+        <h1>Arquitectura del sistema</h1>
+        <p>Componentes, flujo de datos, autenticación, patrones de código y decisiones técnicas de Ademy.</p>
+      </div>
+
+      <h2 id="resumen">Resumen</h2>
+      <p>Ademy es una aplicación web full-stack en arquitectura cliente-servidor. El frontend React se comunica con el backend Express mediante una API REST protegida por JWT. El backend persiste datos en MySQL y almacena archivos en el filesystem local o en Cloudflare R2.</p>
+
+      <h2 id="vista-alto-nivel">Vista de alto nivel</h2>
+      <pre><code class="language-text">┌─────────────────────────────────────────────────────────────┐
+│                        INTERNET                             │
+└──────────────┬──────────────────────────┬───────────────────┘
+               │                          │
+         ┌─────▼──────┐            ┌──────▼──────┐
+         │  Frontend  │            │   Backend   │
+         │  React 18  │◄──REST────►│  Express 4  │
+         │  (Vercel)  │            │  (Render)   │
+         └────────────┘            └──────┬──────┘
+                                          │
+                              ┌───────────┼───────────┐
+                              │           │           │
+                        ┌─────▼────┐  ┌───▼───┐  ┌───▼────────┐
+                        │ MySQL 8  │  │  R2   │  │  Mailgun   │
+                        │ (TiDB)   │  │ Files │  │  (Email)   │
+                        └──────────┘  └───────┘  └────────────┘</code></pre>
+
+      <h2 id="componentes">Componentes</h2>
+
+      <h3>Frontend (React)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>Detalle</th></tr></thead>
+          <tbody>
+            <tr><td>Framework</td><td>React 18 + React Router v6</td></tr>
+            <tr><td>Estilos</td><td>Bootstrap 5.3</td></tr>
+            <tr><td>Estado</td><td><code>useState</code> / <code>useEffect</code> por componente — sin Redux ni Context</td></tr>
+            <tr><td>HTTP</td><td>Cliente custom <code>httpClient.js</code> (no axios)</td></tr>
+            <tr><td>Auth</td><td>Token JWT en <code>localStorage</code>; logout automático en 401</td></tr>
+            <tr><td>Tiempo real</td><td>Socket.IO Client (notificaciones por sala de usuario)</td></tr>
+            <tr><td>Deploy</td><td>Hosting estático (Vercel u equivalente)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Backend (Node.js / Express)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>Detalle</th></tr></thead>
+          <tbody>
+            <tr><td>Runtime</td><td>Node.js 20</td></tr>
+            <tr><td>Framework</td><td>Express 4</td></tr>
+            <tr><td>Auth</td><td>JWT (4h expiry) — hash del token almacenado en tabla <code>sesiones</code></td></tr>
+            <tr><td>RBAC</td><td>Permisos cargados por request, chequeados via <code>checkPermission</code></td></tr>
+            <tr><td>Jobs</td><td>node-cron: anular bonificaciones vencidas (diario) + purga de logs (medianoche UTC)</td></tr>
+            <tr><td>Uploads</td><td>Multer — máx. 5MB, PDF/JPEG/JPG/PNG</td></tr>
+            <tr><td>Storage</td><td><code>utils/storage.js</code>: driver <code>local</code> o <code>r2</code> según env var</td></tr>
+            <tr><td>Deploy</td><td>Servidor Node.js (Render u equivalente)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="flujo-request">Flujo de un request</h2>
+      <pre><code class="language-text">Frontend Component
+  └─► Service (httpClient.js)         ← agrega Bearer token automáticamente
+        └─► Backend Route              ← Express router
+              └─► auth.middleware      ← verifyToken + checkPermission
+                    └─► Controller     ← lógica de negocio, validaciones
+                          └─► Model    ← queries MySQL (mysql2 pool)
+                                └─► MySQL</code></pre>
+
+      <h2 id="estructura-capas">Organización por capas</h2>
+      <p>El sistema sigue una arquitectura en capas bien definida:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Capa</th><th>Responsabilidad</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Módulos (Frontend)</strong></td><td>Dominios funcionales independientes: académico, financiero, operativo, seguridad</td></tr>
+            <tr><td><strong>Servicios (Frontend)</strong></td><td>Capa de comunicación con la API; todos usan el cliente HTTP compartido</td></tr>
+            <tr><td><strong>Rutas (Backend)</strong></td><td>Definición de endpoints Express y aplicación de middleware</td></tr>
+            <tr><td><strong>Controladores (Backend)</strong></td><td>Lógica de negocio y validación de entrada</td></tr>
+            <tr><td><strong>Modelos (Backend)</strong></td><td>Acceso a base de datos mediante queries MySQL</td></tr>
+            <tr><td><strong>Helpers (Backend)</strong></td><td>Generación de PDF, correos, cálculos de bonificaciones y precios</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="autenticacion">Autenticación y autorización</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Login</h4>
+            <p>El usuario envía credenciales a <code>POST /auth/login</code>. El backend valida, genera un JWT con 4h de expiración y almacena el hash del token en la tabla <code>sesiones</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Requests protegidos</h4>
+            <p>El frontend inyecta el header <code>Authorization: Bearer &lt;token&gt;</code> en cada request. <code>verifyToken</code> valida la firma JWT y verifica que el hash esté en <code>sesiones</code> (para soportar logout).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Verificación de permisos (RBAC)</h4>
+            <p><code>checkPermission('codigo')</code> carga los permisos del rol del usuario y verifica que tenga el permiso requerido. El usuario con el rol de mayor jerarquía bypasea todos los checks de permisos.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Logout</h4>
+            <p><code>POST /auth/logout</code> elimina el registro de <code>sesiones</code>, invalidando el token aunque no haya expirado. El frontend borra el token de <code>localStorage</code> ante cualquier 401.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 id="storage">Almacenamiento de archivos</h2>
+      <p>El módulo <code>utils/storage.js</code> abstrae el driver de almacenamiento mediante la variable de entorno <code>STORAGE_DRIVER</code>:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Driver</th><th>Paths</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><code>local</code></td><td><code>backend/storage/</code></td><td>Desarrollo y servidores propios</td></tr>
+            <tr><td><code>r2</code></td><td>Prefijo <code>r2://</code> en DB</td><td>Producción en Cloudflare R2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+
+<h2 id="convenciones-nomenclatura">Nomenclatura</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Elemento</th><th>Convención</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td>Tablas DB</td><td>snake_case</td><td><code>log_actividad</code>, <code>pago_conceptos</code></td></tr>
+            <tr><td>Archivos JS</td><td>camelCase</td><td><code>authService.js</code></td></tr>
+            <tr><td>Componentes React</td><td>PascalCase</td><td><code>PagoFormModal</code></td></tr>
+            <tr><td>Rutas API</td><td>kebab-case</td><td><code>/api/pago-conceptos</code></td></tr>
+            <tr><td>Permisos</td><td>dot notation</td><td><code>modulo.accion</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/sidebar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
