@@ -419,6 +419,283 @@ a {
   z-index: 0;
 }
 
+/* ── HeroFlow pipeline ─────────────────────────────────── */
+.hero-flow {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  transform: perspective(1200px) rotateX(4deg) rotateY(-1deg);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hf-pipeline {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 28px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--stroke);
+  border-radius: 22px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.07);
+}
+
+.hf-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.hf-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  padding: 4px 2px;
+}
+
+.hf-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: 1px solid;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s;
+}
+
+.hf-node--main .hf-icon {
+  width: 62px;
+  height: 62px;
+  font-size: 1.45rem;
+  box-shadow: 0 4px 20px rgba(12, 134, 121, 0.22);
+}
+
+.hf-node:hover .hf-icon {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.hf-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.hf-node--main .hf-label {
+  font-size: 0.88rem;
+}
+
+.hf-desc {
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.4;
+  max-width: 88px;
+}
+
+.hf-connector {
+  flex: 0 0 36px;
+  position: relative;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  margin: 0 2px;
+}
+
+.hf-line {
+  position: absolute;
+  left: 0;
+  right: 10px;
+  height: 1.5px;
+  background: var(--stroke);
+}
+
+.hf-dot {
+  position: absolute;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: -4px;
+  animation: hf-travel 2.2s ease-in-out infinite;
+}
+
+@keyframes hf-travel {
+  0%   { left: 0;               opacity: 0; transform: scale(0.5); }
+  12%  { opacity: 1;            transform: scale(1); }
+  85%  { opacity: 1;            transform: scale(1); }
+  100% { left: calc(100% - 8px); opacity: 0; transform: scale(0.5); }
+}
+
+.hf-tip {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hf-adapt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 14px;
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* ── HeroEcosystem ─────────────────────────────────────── */
+.hero-ecosystem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transform: perspective(1200px) rotateX(4deg) rotateY(-1deg);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.he-stage {
+  position: relative;
+  width: 500px;
+  height: 330px;
+}
+
+.he-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Cards */
+.he-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid;
+  padding: 14px 15px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.22s;
+}
+
+.he-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(15, 23, 42, 0.13);
+}
+
+.he-card--ademy {
+  left: 68px;
+  top: 64px;
+  width: 192px;
+  height: 160px;
+  border-color: rgba(12, 134, 121, 0.28);
+}
+
+.he-card--docco {
+  left: 306px;
+  top: 8px;
+  width: 186px;
+  height: 108px;
+  border-color: rgba(124, 58, 237, 0.25);
+}
+
+.he-card--empleo {
+  left: 306px;
+  top: 214px;
+  width: 186px;
+  height: 108px;
+  border-color: rgba(29, 78, 216, 0.25);
+}
+
+.he-card-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+.he-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.he-icon--blend {
+  mix-blend-mode: multiply;
+}
+
+.he-card--ademy .he-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.he-name {
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.he-name--ademy  { color: #0c8679; }
+.he-name--docco  { color: #5b21b6; }
+.he-name--empleo { color: #1e40af; }
+
+.he-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--stroke);
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.he-features li {
+  font-size: 0.7rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.he-fi {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+}
+
+.he-desc {
+  margin: 0;
+  font-size: 0.71rem;
+  color: var(--muted);
+  line-height: 1.45;
+  border-top: 1px solid var(--stroke);
+  padding-top: 8px;
+}
+
+.he-adapt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
 .screen {
   position: relative;
   z-index: 1;
@@ -2455,6 +2732,31 @@ a.footer-contact-item:hover {
   .hero-network {
     width: 100%;
     margin-left: 0;
+  }
+
+  .he-stage {
+    transform: scale(0.72);
+    transform-origin: top center;
+    margin-bottom: -92px;
+  }
+
+  /* Scale down ecosystem on tablet */
+  .he-stage {
+    transform: scale(0.9);
+    transform-origin: top center;
+    margin-bottom: -33px;
+  }
+
+  .hf-pipeline {
+    padding: 20px 12px;
+  }
+
+  .hf-connector {
+    flex: 0 0 24px;
+  }
+
+  .hf-desc {
+    display: none;
   }
 
   .hero-network__scene {

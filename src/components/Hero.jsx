@@ -1,6 +1,6 @@
 import { FaArrowRight, FaPlay } from 'react-icons/fa'
 import Counter from './Counter'
-import HeroNetwork from './HeroNetwork'
+import HeroEcosystem from './HeroEcosystem'
 
 export default function Hero() {
   return (
@@ -8,13 +8,13 @@ export default function Hero() {
       <div className="hero-text" data-reveal="left">
         <div className="hero-badge">
           <span className="hero-badge-dot"></span>
-          Hecho para centros de capacitación en Ecuador
+          Ecosistema para centros de capacitación
         </div>
         <h1>
-          <span className="accent">Gestión de tu centro,</span>{' '}en un solo lugar
+          <span className="accent">De la matrícula al empleo,</span>{' '}un flujo completo
         </h1>
         <p>
-          Matrículas, cobros, diplomas y facturación electrónica al SRI. Todo conectado, todo trazable desde el primer contacto hasta el certificado final.
+          Ademy gestiona tu campus, Docco verifica documentos con IA y EmpleoFácil conecta a tus egresados con empleadores. Un ecosistema real, en producción, adaptable a los requerimientos de tu institución.
         </p>
         <div className="hero-actions">
           <a className="btn btn-primary" href="#contacto">
@@ -31,8 +31,8 @@ export default function Hero() {
           </div>
           <div className="hero-trust-divider"></div>
           <div className="hero-trust-item">
-            <Counter count={1} suffix=" sistema" />
-            <span className="metric-label">para todo tu flujo</span>
+            <Counter count={3} suffix=" plataformas" />
+            <span className="metric-label">integradas en un flujo</span>
           </div>
           <div className="hero-trust-divider"></div>
           <div className="hero-trust-item">
@@ -44,7 +44,7 @@ export default function Hero() {
 
       <div className="hero-visual" data-reveal="right">
         <div className="hero-glow"></div>
-        <HeroNetwork />
+        <HeroEcosystem />
       </div>
     </section>
   )
