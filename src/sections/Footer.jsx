@@ -16,6 +16,7 @@ const NAV_GROUPS = [
       ['#faq', 'Preguntas frecuentes'],
       ['#comparativa', 'Comparativa'],
       ['#seguridad', 'Seguridad'],
+      ['/docs/', 'Documentación'],
     ],
   },
   {
@@ -78,9 +79,11 @@ export default function Footer() {
             <ul className="footer-col-list">
               {links.map(([href, label]) => (
                 <li key={label}>
-                  <a href={href} onClick={(e) => handleLink(e, href)}>
-                    {label}
-                  </a>
+                  {href.startsWith('/') ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
+                  ) : (
+                    <a href={href} onClick={(e) => handleLink(e, href)}>{label}</a>
+                  )}
                 </li>
               ))}
             </ul>

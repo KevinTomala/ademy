@@ -60,9 +60,6 @@ export default function Nav() {
             {label}
           </a>
         ))}
-        <a href="/docs/" target="_blank" rel="noopener noreferrer" className="nav-docs-link">
-          Docs
-        </a>
         <a className="nav-cta-link" href="#contacto" onClick={(e) => handleLink(e, '#contacto')}>
           Solicitar demo
         </a>
