@@ -125,7 +125,7 @@ export default function HeroEcosystem() {
             <img src="/assets/docco-icon.png" alt="Docco" className="he-icon he-icon--blend" />
             <span className="he-name he-name--docco">Docco</span>
           </div>
-          <p className="he-desc">OCR + IA · Analiza documentos y devuelve resultado</p>
+          <p className="he-desc">OCR + IA · Análisis de documentos</p>
         </div>
 
         {/* ── EmpleoFácil card ── */}
