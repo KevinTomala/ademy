@@ -82,6 +82,14 @@ const MODES = [
 const EMPTY_FIELDS = { nombre: '', email: '', rol: '', institucion: '', fecha: '', mensaje: '' }
 const EMPTY_ERRORS = { nombre: '', email: '', rol: '', institucion: '' }
 
+const COOLDOWN_MS = 2 * 60 * 1000
+const COOLDOWN_KEY = 'ademy_contact_sent_at'
+
+function getCooldownSecondsLeft() {
+  const sentAt = Number(localStorage.getItem(COOLDOWN_KEY) || 0)
+  return Math.max(0, Math.ceil((sentAt + COOLDOWN_MS - Date.now()) / 1000))
+}
+
 function validateFields(fields, isDemo) {
   const errors = { ...EMPTY_ERRORS }
   if (!fields.nombre.trim()) errors.nombre = 'El nombre es requerido.'
@@ -110,8 +118,19 @@ export default function Contacto() {
   const [recaptchaReady, setRecaptchaReady] = useState(false)
   const [recaptchaToken, setRecaptchaToken] = useState('')
   const [recaptchaError, setRecaptchaError] = useState('')
+  const [cooldownSecs, setCooldownSecs] = useState(() => getCooldownSecondsLeft())
   const captchaContainerRef = useRef(null)
   const captchaWidgetIdRef = useRef(null)
+
+  useEffect(() => {
+    if (cooldownSecs <= 0) return
+    const id = setInterval(() => {
+      const left = getCooldownSecondsLeft()
+      setCooldownSecs(left)
+      if (left <= 0) clearInterval(id)
+    }, 1000)
+    return () => clearInterval(id)
+  }, [cooldownSecs > 0])
 
   const isDemo = mode === 'demo'
   const captchaEnabled = Boolean(RECAPTCHA_SITE_KEY)
@@ -218,6 +237,8 @@ export default function Contacto() {
         setErrors(EMPTY_ERRORS)
         setTouched({})
         resetCaptcha()
+        localStorage.setItem(COOLDOWN_KEY, String(Date.now()))
+        setCooldownSecs(getCooldownSecondsLeft())
         setStatus({
           msg: isDemo
             ? '¡Listo! Nos pondremos en contacto para confirmar tu demo.'
@@ -232,7 +253,8 @@ export default function Contacto() {
     }
   }
 
-  const submitDisabled = captchaEnabled && (!recaptchaReady || !recaptchaToken)
+  const inCooldown = cooldownSecs > 0
+  const submitDisabled = inCooldown || (captchaEnabled && (!recaptchaReady || !recaptchaToken))
 
   return (
     <section className="section contact" id="contacto">
@@ -379,6 +401,12 @@ export default function Contacto() {
             {status.msg && (
               <p className={`form-status ${status.type}`} role="status" aria-live="polite">
                 {status.msg}
+              </p>
+            )}
+
+            {inCooldown && (
+              <p className="form-status is-success" role="status">
+                Correo enviado. Puedes volver a enviar en {Math.floor(cooldownSecs / 60)}:{String(cooldownSecs % 60).padStart(2, '0')} min.
               </p>
             )}
 
