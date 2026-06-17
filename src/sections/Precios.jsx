@@ -130,11 +130,10 @@ export default function Precios() {
 
       <div className="price-enterprise" data-reveal>
         <div className="price-enterprise__text">
-          <strong>¿Prefieres alojar el sistema en tu propio servidor?</strong>
+          <strong>¿Necesitas instalación en tu propio servidor?</strong>
           <p>
-            Implementamos Ademy directamente en tu infraestructura. Sin límites de almacenamiento,
-            sin costos de nube. Desde <strong>$6,000</strong> de implementación
-            + <strong>$400/mes</strong> de mantenimiento incluido.
+            Implementamos Ademy directamente en tu infraestructura, sin depender de la nube.
+            Cuéntanos el tamaño de tu institución y te preparamos una propuesta a medida.
           </p>
         </div>
         <a href="#contacto" className="btn btn-ghost price-enterprise__cta">
