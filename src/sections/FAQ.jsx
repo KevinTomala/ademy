@@ -7,7 +7,7 @@ const ITEMS = [
   },
   {
     q: '¿Funciona con el SRI de Ecuador?',
-    a: 'Sí. Ademy se integra con Contifico para emitir facturas electrónicas válidas ante el SRI automáticamente cuando se registra un pago.',
+    a: 'Sí. Ademy se integra con Contífico para emitir facturas electrónicas válidas ante el SRI automáticamente cuando se registra un pago. Esta integración requiere una suscripción propia a Contífico (desde $33/mes); si ya tienes cuenta, Ademy se conecta directamente a ella.',
   },
   {
     q: '¿Cuánto tiempo toma implementar Ademy?',

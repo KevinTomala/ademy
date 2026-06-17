@@ -141,10 +141,6 @@ export default function Precios() {
         </a>
       </div>
 
-      <p className="price-note" data-reveal>
-        * La integración con Contífico requiere una suscripción propia a Contífico (desde $33/mes).
-        Ademy se conecta automáticamente a tu cuenta existente.
-      </p>
     </section>
   )
 }
