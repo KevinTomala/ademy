@@ -9,6 +9,7 @@ import Modulos from './sections/Modulos'
 import Integraciones from './sections/Integraciones'
 import Comparativa from './sections/Comparativa'
 import Caso from './sections/Caso'
+import Precios from './sections/Precios'
 import CTASection from './sections/CTASection'
 import Seguridad from './sections/Seguridad'
 import Roles from './sections/Roles'
@@ -80,6 +81,7 @@ function LandingPage({ progressBarRef }) {
       <Integraciones />
       <Roles />
 <Caso />
+      <Precios />
       <CTASection />
       <Seguridad />
       <Demo />

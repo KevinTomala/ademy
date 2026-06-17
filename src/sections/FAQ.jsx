@@ -3,7 +3,7 @@ import { useState } from 'react'
 const ITEMS = [
   {
     q: '¿Cuánto cuesta Ademy?',
-    a: 'El precio depende del tamaño de tu institución, el número de sedes y los módulos que necesitas. Agenda una demo y te preparamos una cotización ajustada a tu caso.',
+    a: 'Tenemos tres planes mensuales: Esencial ($99/mes), Profesional ($199/mes) y Enterprise ($399/mes). Todos incluyen Campus Ademy para estudiantes. Si pagas anual te regalamos 2 meses. También ofrecemos instalación en tu propio servidor desde $6,000.',
   },
   {
     q: '¿Funciona con el SRI de Ecuador?',
