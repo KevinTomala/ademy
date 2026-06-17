@@ -5240,6 +5240,14 @@ a.footer-contact-item:hover {
     padding: 24px;
   }
 }
+@media (max-width: 480px) {
+  .price-card {
+    padding: 24px 20px;
+  }
+  .price-card__value {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+  }
+}
 .price-note {
   max-width: 980px;
   margin: 0 auto;
