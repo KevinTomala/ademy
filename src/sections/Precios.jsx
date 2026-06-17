@@ -67,7 +67,6 @@ export default function Precios() {
   return (
     <section className="section" id="precios">
       <div className="section-header" data-reveal>
-        <span className="chip">Planes</span>
         <h2>Precios claros, sin sorpresas</h2>
         <p>Elige el plan que se ajusta al tamaño y necesidades de tu institución.</p>
       </div>

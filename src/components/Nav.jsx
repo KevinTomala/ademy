@@ -7,6 +7,7 @@ const NAV_LINKS = [
   ['#modulos', 'Módulos'],
   ['#demo', 'Demo'],
   ['#tutoriales', 'Videos'],
+  ['#precios', 'Planes'],
   ['#contacto', 'Contacto'],
 ]
 
